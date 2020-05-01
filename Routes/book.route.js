@@ -4,13 +4,7 @@ const shortid = require("shortid");
 const db = require("../db.js");
 
 //get books
-router.get("/", (req, res) => {
-  const books = db.get("books").value();
-  
-  res.render("books/index.pug", {
-    books
-  });
-});
+router.get("/", );
 
 //get from create book
 router.get("/create", (req, res) => {
