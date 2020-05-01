@@ -9,11 +9,11 @@ ul
       th bookId
   table
     if transactions.length > 0
-      each item in transaction
+      each item in transactions
         tr
-          td item.id
-          td item.userId
-          td item.bookId
+          td=item.id
+          td=item.userId
+          td=item.bookId
     else
       tr
         td ...
