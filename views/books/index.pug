@@ -7,6 +7,10 @@ ul
        br
        span Description: &nbsp
        span= book.des
+       br
+       a(href='/books/' + book.id + '/delete') Delete
+       span &nbsp
+       a(href='/books/' + book.id + '/update') Update
       
   else
     li Don't have books in your store

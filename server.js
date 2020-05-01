@@ -44,10 +44,31 @@ app.post("/books", (req, res) => {
 });
 
 //deletebookby id
-app.delete("/books/:id/delete", (req, res) => {});
+app.get("/books/:id/delete", (req, res) => {
+  const id = req.params.id;
+  db.get('books').remove(i => i.id === id).write()
+  
+  res.redirect('/books');
+});
 
 //updatebookby id
-app.put("/books/:id/update", (req, res) => {});
+app.get("/books/:id/update", (req, res) => {
+  const id = req.params.id;
+  
+  const book = db.get('books').find({id}).value();
+  
+  res.render('books/update', {book})
+  
+});
+
+app.put("/books/:id/update", (req, res) => {
+  const id = req.params.id;
+  
+  const book = db.get('books').find({id}).assign.value();
+  
+  res.render('books/update', {book})
+  
+});
 
 app.listen(process.env.PORT, () => {
   console.log("Server listening on port " + process.env.PORT);
