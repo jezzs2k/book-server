@@ -9,49 +9,49 @@ module.exports.getBook = (req, res) => {
   });
 }
 module.exports.getCreateBook = (req, res) => {
-  res.render("users/create.pug");
-};
+  res.render("books/create.pug");
+}
 
-module.exports.postCreateUser = (req, res) => {
+module.exports.postCreateBook = (req, res) => {
   const data = {
     id: shortid.generate(),
-    name: req.body.name,
-    phone: req.body.phone
+    title: req.body.title,
+    des: req.body.des
   };
 
-  db.get("users")
+  db.get("books")
     .push(data)
     .write();
-  res.redirect("/users");
-};
+  res.redirect("/books");
+}
 
-module.exports.deleteUser = (req, res) => {
+module.exports.deleteBook = (req, res) => {
   const id = req.params.id;
-  db.get("users")
+  db.get("books")
     .remove(i => i.id === id)
     .write();
 
-  res.redirect("/users");
+  res.redirect("/books");
 }
 
-module.exports.getUpdateUser = (req, res) => {
+module.exports.getUpdateBook = (req, res) => {
   const id = req.params.id;
 
-  const user = db
-    .get("users")
+  const book = db
+    .get("books")
     .find({ id })
     .value();
 
-  res.render("users/update", { user });
-};
+  res.render("books/update", { book });
+}
 
-module.exports.postUpdateUser = (req, res) => {
+module.exports.postUpdateBook = (req, res) => {
   const id = req.params.id;
 
-  db.get("users")
+  db.get("books")
     .find({ id })
     .assign({ ...req.body })
     .write();
 
-  res.redirect("/users");
-}
+  res.redirect("/books");
+};

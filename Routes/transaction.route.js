@@ -1,49 +1,21 @@
 const router = require("express").Router();
-const shortid = require("shortid");
 
-const db = require("../db.js");
+const {
+  getTransactions,
+  getCreateTransaction,
+  postCreateTransaction,
+  complete
+} = require("../Controllers/transaction.controller.js");
 
 //get transaction
-router.get("/", (req, res) => {
-  const transactions = db.get("transactions").value();
-
-  res.render("transaction/index.pug", {
-    transactions
-  });
-});
+router.get("/", getTransactions);
 
 //get form transaction
-router.get("/create", (req, res) => {
-  const users = db.get("users").value();
-  const books = db.get("books").value();
-
-  res.render("transaction/create.pug", {
-    users,
-    books
-  });
-});
+router.get("/create", getCreateTransaction);
 
 //post transaction
-router.post("/create", (req, res) => {
-  const name = req.body.user;
-  const title = req.body.book;
-  
-  const user = db
-    .get("users")
-    .find({ name })
-    .value();
-  const book = db
-    .get("books")
-    .find({ title })
-    .value();
+router.post("/create", postCreateTransaction);
 
-  db.get("transactions").push({
-    id: shortid.generate(),
-    userId: user.id,
-    bookId: book.id
-  }).write();
-
-  res.redirect("/transactions");
-});
+router.get("/:id/complete", complete);
 
 module.exports = router;

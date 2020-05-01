@@ -7,13 +7,17 @@ ul
       th id
       th user
       th book
+      th Complete
   table
     if transactions.length > 0
       each item in transactions
-        tr
-          td=item.id
-          td=item.userId
-          td=item.bookId
+        if item.isComplete === false
+          tr
+            td=item.id
+            td=item.userId
+            td=item.bookId
+            td 
+              a(href=`/transactions/${item.id}/complete`) Complete
     else
       tr
         td ...
