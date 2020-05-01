@@ -16,5 +16,17 @@
       "des": "Sanhs hay gianh cho cac ban lap trinh vien mowi bawtdau tiep can  javascript"
     }
   ],
-  "users": []
+  "users": [
+    {
+      "id": "uzy-vL4nS",
+      "name": "Vũ Thanh Hiếu",
+      "phone": "0966187232"
+    },
+    {
+      "id": "oACesTOTJ",
+      "name": "test update",
+      "phone": "0011223344"
+    }
+  ],
+  "transaction": []
 }

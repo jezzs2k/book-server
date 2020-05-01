@@ -9,18 +9,16 @@ app.use(express.urlencoded({ extended: true }));
 
 app.set("view engine", "pug");
 
-app.get("/", (request, response) => {
-  response.render("./index.pug");
+app.get("/", (req, res) => {
+  res.render("./index.pug");
 });
 
 //Router
-const booksRoute = require('./Routes/book.route.js');
-const usersRoute = require('./Routes/user.route.js');
+const booksRoute = require("./Routes/book.route.js");
+const usersRoute = require("./Routes/user.route.js");
 
-app.use('/books', booksRoute);
-app.use('/users', usersRoute);
-
-
+app.use("/books", booksRoute);
+app.use("/users", usersRoute);
 
 app.listen(process.env.PORT, () => {
   console.log("Server listening on port " + process.env.PORT);

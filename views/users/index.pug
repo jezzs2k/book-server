@@ -1,7 +1,8 @@
 h2 List User
 ul 
-  if user.length > 0
+  if users.length > 0
     each user in users
+      br
       li
         span Name:
         span &nbsp
@@ -10,9 +11,14 @@ ul
         span Phone:
         span &nbsp
         span= user.phone
+        br
+        a(href='/users/' + user.id + '/delete') Delete
+        span &nbsp
+        a(href='/users/' + user.id + '/update') Update
   else
     li 
       span You don't have User
+      br
       a(href='/') Back to home
       
 a(href='/users/create') Create new user

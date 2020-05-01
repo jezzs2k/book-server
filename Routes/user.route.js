@@ -1,11 +1,12 @@
-const router = require('express').Router();
-const shortid = require('shortid');
+const router = require("express").Router();
+const shortid = require("shortid");
 
-const db = require('../db.js')
+const db = require("../db.js");
 
 //get user
 router.get("/", (req, res) => {
   const users = db.get("users").value();
+  console.log(users);
   res.render("users/index.pug", {
     users
   });
@@ -20,7 +21,7 @@ router.get("/create", (req, res) => {
 router.post("/", (req, res) => {
   const data = {
     id: shortid.generate(),
-    title: req.body.name,
+    name: req.body.name,
     phone: req.body.phone
   };
 

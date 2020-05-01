@@ -1,12 +1,12 @@
-const router = require('express').Router();
-const shortid = require('shortid');
+const router = require("express").Router();
+const shortid = require("shortid");
 
-const db = require('../db.js')
+const db = require("../db.js");
 
 //get books
 router.get("/", (req, res) => {
   const books = db.get("books").value();
-  console.log(books)
+  
   res.render("books/index.pug", {
     books
   });
