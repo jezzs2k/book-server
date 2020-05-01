@@ -8,6 +8,9 @@ const FileSync = require("lowdb/adapters/FileSync");
 const adapter = new FileSync("db.json");
 const db = low(adapter);
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true })) ;
+
 db.defaults({ books: [] }).write();
 
 app.set("view engine", "pug");
@@ -25,7 +28,7 @@ app.get("/books", (req, res) => {
 });
 
 app.get('/books/create', (req, res) => {
-  res.redirect('books/create.pug');
+  res.render('books/create.pug');
 })
 
 //create new book {id: , description: , title: }
