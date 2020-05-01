@@ -1,18 +1,17 @@
 h2 Transantion
 
 form(method='post')
-  select#user
+  select(id='user' name='user')
     each user in users
       option(value=user.name)= user.name
   span &nbsp
   label(for='user') Choose a User
   br
 
-  select#book
+  select(id='book' name='book')
     each book in books
       option(value=book.title)= book.title
   span &nbsp
   label(for='book') Choose a Book
-
   br
   button Create

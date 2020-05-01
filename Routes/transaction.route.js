@@ -23,4 +23,27 @@ router.get("/create", (req, res) => {
   });
 });
 
+//post transaction
+router.post("/create", (req, res) => {
+  const name = req.body.user;
+  const title = req.body.book;
+  
+  const user = db
+    .get("users")
+    .find({ name })
+    .value();
+  const book = db
+    .get("books")
+    .find({ title })
+    .value();
+
+  db.get("transactions").push({
+    id: shortid.generate(),
+    userId: user.id,
+    bookId: book.id
+  }).write();
+
+  res.redirect("/transactions");
+});
+
 module.exports = router;
