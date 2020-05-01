@@ -5,10 +5,10 @@ const db = require("../db.js");
 
 //get transaction
 router.get("/", (req, res) => {
-  const transaction = db.get("transaction").value();
+  const transactions = db.get("transaction").value();
   
   res.render("transaction/index.pug", {
-    transaction
+    transactions
   });
 });
 

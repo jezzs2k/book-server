@@ -1,7 +1,23 @@
 h2 List Transaction
 ul
-  if transaction.length > 0
-    each item in transaction
-      
   
   
+  table
+    tr
+      th id
+      th userId
+      th bookId
+  table
+    if transactions.length > 0
+      each item in transaction
+        tr
+          td item.id
+          td item.userId
+          td item.bookId
+    else
+      tr
+        td ...
+        td ...
+        td ...
+
+a(href='/transactions/create') Create new transaction

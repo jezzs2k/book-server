@@ -16,9 +16,11 @@ app.get("/", (req, res) => {
 //Router
 const booksRoute = require("./Routes/book.route.js");
 const usersRoute = require("./Routes/user.route.js");
+const transactionsRoute = require("./Routes/transaction.route.js");
 
 app.use("/books", booksRoute);
 app.use("/users", usersRoute);
+app.use("/transactions", transactionsRoute);
 
 app.listen(process.env.PORT, () => {
   console.log("Server listening on port " + process.env.PORT);
