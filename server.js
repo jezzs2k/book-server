@@ -61,12 +61,13 @@ app.get("/books/:id/update", (req, res) => {
   
 });
 
-app.put("/books/:id/update", (req, res) => {
+app.post("/books/:id/update", (req, res) => {
   const id = req.params.id;
+    
+  console.log(id)
+  db.get('books').find({id}).assign({...req.body}).write();
   
-  const book = db.get('books').find({id}).assign.value();
-  
-  res.render('books/update', {book})
+  res.redirect('/books');
   
 });
 
