@@ -1,7 +1,18 @@
-label(for='user') Choose a User:
-select#User
-  
-  option(value=) Volvo
-  option(value='saab') Saab
-  option(value='vw') VW
-  option(value='audi', selected='') Audi
+h2 Transantion
+
+form(method='post')
+  select#user
+    each user in users
+      option(value=user.name)= user.name
+  span &nbsp
+  label(for='user') Choose a User
+  br
+
+  select#book
+    each book in books
+      option(value=book.title)= book.title
+  span &nbsp
+  label(for='book') Choose a Book
+
+  br
+  button Create
