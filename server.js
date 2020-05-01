@@ -15,8 +15,11 @@ app.get("/", (request, response) => {
 
 //Router
 const booksRoute = require('./Routes/book.route.js');
+const usersRoute = require('./Routes/user.route.js');
 
 app.use('/books', booksRoute);
+app.use('/users', usersRoute);
+
 
 
 app.listen(process.env.PORT, () => {

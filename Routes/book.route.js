@@ -5,12 +5,14 @@ const db = require('../db.js')
 
 //get books
 router.get("/", (req, res) => {
-  const books = db.get("books").__wrapped__.books;
+  const books = db.get("books").value();
+  console.log(books)
   res.render("books/index.pug", {
     books
   });
 });
 
+//get from create book
 router.get("/create", (req, res) => {
   res.render("books/create.pug");
 });
@@ -51,6 +53,7 @@ router.get("/:id/update", (req, res) => {
   res.render("books/update", { book });
 });
 
+//post update books
 router.post("/:id/update", (req, res) => {
   const id = req.params.id;
 

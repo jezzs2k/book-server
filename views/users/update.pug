@@ -1,0 +1,11 @@
+h2 Create new user
+form(action=`/users/${user.id}/create` method='post')
+  
+  input(name='name' type='text' value= user.name)
+  lable Name
+  br
+  
+  input(name='phone' type='text' value= user.phone)
+  lable Phone
+  br
+  button Update

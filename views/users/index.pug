@@ -1,0 +1,18 @@
+h2 List User
+ul 
+  if user.length > 0
+    each user in users
+      li
+        span Name:
+        span &nbsp
+        span= user.name
+        br
+        span Phone:
+        span &nbsp
+        span= user.phone
+  else
+    li 
+      span You don't have User
+      a(href='/') Back to home
+      
+a(href='/users/create') Create new user

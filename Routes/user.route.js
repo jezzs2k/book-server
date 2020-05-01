@@ -5,12 +5,13 @@ const db = require('../db.js')
 
 //get user
 router.get("/", (req, res) => {
-  const users = db.get("users").__wrapped__.books;
+  const users = db.get("users").value();
   res.render("users/index.pug", {
     users
   });
 });
 
+//get from create user
 router.get("/create", (req, res) => {
   res.render("users/create.pug");
 });
@@ -43,14 +44,15 @@ router.get("/:id/delete", (req, res) => {
 router.get("/:id/update", (req, res) => {
   const id = req.params.id;
 
-  const book = db
+  const user = db
     .get("users")
     .find({ id })
     .value();
 
-  res.render("users/update", { book });
+  res.render("users/update", { user });
 });
 
+//post update user
 router.post("/:id/update", (req, res) => {
   const id = req.params.id;
 
