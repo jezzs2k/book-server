@@ -19,11 +19,26 @@ app.get("/", (request, response) => {
 //get books
 app.get("/books", (req, res) => {
   const books = db.get("books").__wrapped__.books;
-  res
+  res.render('books/index.pug', {
+    books
+  })
 });
 
+app.get('/books/create', (req, res) => {
+  res.redirect('books/create.pug');
+})
+
 //create new book {id: , description: , title: }
-app.post("/books", (req, res) => {});
+app.post("/books", (req, res) => {
+  const data = {
+    id:shortid.generate(),
+    title: req.body.title,
+    des: req.body.des
+  }
+  
+  db.get('books').push(data).write();
+  res.redirect('/books');
+});
 
 //deletebookby id
 app.delete("/books/:id/delete", (req, res) => {});

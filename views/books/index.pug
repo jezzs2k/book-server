@@ -1,0 +1,15 @@
+ul 
+  if books.length > 0
+   each book in books
+     li
+       span title: &nbsp
+       span= book.title
+       br
+       span Description: &nbsp
+       span= book.des
+      
+  else
+    li Don't have books in your store
+    a(href='/') Back to Home
+
+a(href='/books/create') create new book
