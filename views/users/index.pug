@@ -5,15 +5,15 @@ block content
   .list-group
     if users.length > 0
       each user in users
+        a(href=`/users/${user.id}/delete` class='ml-auto') Delete
         a.list-group-item.mb-2.list-group-item-action.flex-column.align-items-start.active(href=`/users/${user.id}/update`)
           .d-flex.w-100.justify-content-between
             h5.mb-1= user.name
             small 3 days ago
           p.mb-1= user.phone
-            a(href=`/${user.id}/delete`)
-              button.btn.btn-outline-danger Delete
-          
-        
-
-
+            
+    else
+      h2.text-center Don't have User
+      a(href='/') Back to Home
+            
   a(href='/users/create') Create new user

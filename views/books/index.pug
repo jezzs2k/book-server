@@ -1,20 +1,19 @@
-ul 
-  if books.length > 0
-   each book in books
-     br
-     li
-       span title: &nbsp
-       span= book.title
-       br
-       span Description: &nbsp
-       span= book.des
-       br
-       a(href='/books/' + book.id + '/delete') Delete
-       span &nbsp
-       a(href='/books/' + book.id + '/update') Update
-      
-  else
-    li Don't have books in your store
-    a(href='/') Back to Home
+extends ../layout
 
-a(href='/books/create') create new book
+block content
+  h2.text-center Books
+  .list-group
+    if books.length > 0
+      each book in books
+        a(href=`/books/${book.id}/delete` class='ml-auto') Delete
+        a.list-group-item.mb-2.list-group-item-action.flex-column.align-items-start.active(href=`/books/${book.id}/update`)
+          .d-flex.w-100.justify-content-between
+            h5.mb-1= book.title
+            small 3 days ago
+          p.mb-1= book.des
+    else
+      h2.text-center Don't have books in your store
+      a(href='/') Back to Home
+
+
+  a(href='/books/create') create new book
