@@ -1,7 +1,7 @@
 extends ../layout
 
 block content
-  if error !== null
+  if !error
     h2.text-center List Transaction
     table.table
       thead
@@ -26,6 +26,6 @@ block content
             td ...
             td ...
   else
-      .alert.alert-danger(role='alert')= error.error
+      .alert.alert-danger(role='alert')= error
 
   a(href='/transactions/create') Create new transaction

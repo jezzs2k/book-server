@@ -49,11 +49,11 @@ module.exports.complete = (req, res) => {
   if(transaction !== undefined){
     db.get('transactions').find({id}).assign({isComplete: true}).write();    
   }else{
-    res.redirect('/transactions', {
+    res.render('transaction/index.pug', {
       error: 'Id is not defined'
     });  
   }
 
   
-  res.redirect('/transactions', {error: null});
+  res.redirect('/transactions');
 }
