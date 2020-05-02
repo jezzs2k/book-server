@@ -44,7 +44,7 @@
       "id": "1YNGqG2-r",
       "userId": "uzy-vL4nS",
       "bookId": "wCIYKqjWQ",
-      "isComplete": false
+      "isComplete": true
     },
     {
       "id": "NTMibq_IB",
@@ -57,6 +57,12 @@
       "userId": "oACesTOTJ",
       "bookId": "wCIYKqjWQ",
       "isComplete": true
+    },
+    {
+      "id": "LO5MHi1o7",
+      "userId": "uzy-vL4nS",
+      "bookId": "wCIYKqjWQ",
+      "isComplete": false
     }
   ]
 }

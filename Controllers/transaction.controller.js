@@ -44,7 +44,16 @@ module.exports.postCreateTransaction = (req, res) => {
 module.exports.complete = (req, res) => {
   const id = req.params.id;
   
-  db.get('transactions').find({id}).assign({isComplete: true}).write();
+  const transaction = db.get('transactions').find({id}).value();
   
-  res.redirect('/transactions');
+  if(transaction !== undefined){
+    db.get('transactions').find({id}).assign({isComplete: true}).write();    
+  }else{
+    res.redirect('/transactions', {
+      error: 'Id is not defined'
+    });  
+  }
+
+  
+  res.redirect('/transactions', {error: null});
 }
