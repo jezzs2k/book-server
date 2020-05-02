@@ -1,17 +1,16 @@
-h2 Transantion
+extends ../layout
 
-form(method='post')
-  select(id='user' name='user')
-    each user in users
-      option(value=user.name)= user.name
-  span &nbsp
-  label(for='user') Choose a User
-  br
+block content
+  h2.text-center Transantion
 
-  select(id='book' name='book')
-    each book in books
-      option(value=book.title)= book.title
-  span &nbsp
-  label(for='book') Choose a Book
-  br
-  button Create
+  form(method='post')
+    .form-group
+      label(for='user') Select User
+      select#user.form-control(name='user')
+        each user in users
+          option(value=user.name)= user.name
+      label(for='user') Select Book
+      select#book.form-control(name='book')
+        each book in books
+          option(value=book.title)= book.title
+    button.btn.btn-primary(type='submit') Create

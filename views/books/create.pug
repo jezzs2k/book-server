@@ -1,11 +1,13 @@
-h2 Create new book
-form(action='/books' method='post')
-  
-  input(name='title' type='text' )
-  lable Title
-  br
-  
-  input(name='des' type='text' )
-  lable Desription
-  br
-  button Submit
+extends ../layout
+
+block content
+
+  h2.text-center Create new book
+  form(action='/books' method='post')
+    .form-group
+      input.form-control(name='title' type='text' id='title')
+      lable(for='title') Title
+    .form-group
+      label(for='exampleFormControlTextarea1') Description
+      textarea#exampleFormControlTextarea1.form-control(rows='2' name='des')
+    button Submit
