@@ -1,24 +1,19 @@
-h2 List User
-ul 
-  if users.length > 0
-    each user in users
-      br
-      li
-        span Name:
-        span &nbsp
-        span= user.name
-        br
-        span Phone:
-        span &nbsp
-        span= user.phone
-        br
-        a(href='/users/' + user.id + '/delete') Delete
-        span &nbsp
-        a(href='/users/' + user.id + '/update') Update
-  else
-    li 
-      span You don't have User
-      br
-      a(href='/') Back to home
-      
-a(href='/users/create') Create new user
+extends ../layout
+
+block content
+  h2.text-center List User
+  .list-group
+    if users.length > 0
+      each user in users
+        a.list-group-item.mb-2.list-group-item-action.flex-column.align-items-start.active(href=`/users/${user.id}/update`)
+          .d-flex.w-100.justify-content-between
+            h5.mb-1= user.name
+            small 3 days ago
+          p.mb-1= user.phone
+            a(href=`/${user.id}/delete`)
+              button.btn.btn-outline-danger Delete
+          
+        
+
+
+  a(href='/users/create') Create new user
