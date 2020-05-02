@@ -1,11 +1,15 @@
-h2 Create new user
-form(action='/users' method='post')
-  
-  input(name='name' type='text' )
-  lable Name
-  br
-  
-  input(name='phone' type='text' )
-  lable Phone
-  br
-  button Create
+extends ../layout
+block content
+  h2.text-center Create new user
+  form(action='/users' method='post')
+    .form-group
+      label(for='exampleInputEmail1') Name
+      input#exampleInputEmail1.form-control(type='text', placeholder='Name...' name='name')
+    .form-group
+      label(for='exampleInputEmail2') Phone
+      input#exampleInputEmail2.form-control(type='text', placeholder='Phone...' name='phone')
+    button.btn.btn-primary(type='submit') Submit
+      
+
+      
+      

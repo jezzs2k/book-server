@@ -1,11 +1,15 @@
-h2 Create new user
-form(action=`/users/${user.id}/update` method='post')
-  
-  input(name='name' type='text' value= user.name)
-  lable Name
-  br
-  
-  input(name='phone' type='text' value= user.phone)
-  lable Phone
-  br
-  button Update
+extends ../layout
+block content
+  h2.text-center Update user
+  form(action=`/users/${user.id}/update` method='post')
+    .form-group
+      label(for='exampleInputEmail1') Name
+      input#exampleInputEmail1.form-control(type='text', placeholder='Name...' name='name' value=user.name)
+    .form-group
+      label(for='exampleInputEmail2') Phone
+      input#exampleInputEmail2.form-control(type='text', placeholder='Phone...' name='phone' value=user.phone)
+    button.btn.btn-primary(type='submit') Update
+      
+
+      
+    

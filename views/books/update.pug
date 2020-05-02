@@ -1,11 +1,13 @@
-h2 Update book
-form(action='/books/' + book.id + '/update' method='post')
-  
-  input(name='title' type='text' value=book.title)
-  lable Title
-  br
-  
-  input(name='des' type='text' value=book.des)
-  lable Desription
-  br
-  button Update
+extends ../layout
+
+block content
+
+  h2.text-center Update book
+  form(action='/books/' + book.id + '/update' method='post')
+    .form-group
+      input.form-control(name='title' type='text' id='title' value=book.title)
+      lable(for='title') Title
+    .form-group
+      label(for='exampleFormControlTextarea1') Description
+      textarea#exampleFormControlTextarea1.form-control(rows='2' name='des' value=book.des)
+    button.btn.btn-primary(type='submit') Update
