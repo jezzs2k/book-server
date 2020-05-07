@@ -1,5 +1,8 @@
 extends ../layout
 block content
+  if(errors)
+  else
+    
   h2.text-center LOGIN
   form(method='post')
     .form-group
@@ -9,7 +12,7 @@ block content
       label(for='exampleInputEmail2') Password
       input#exampleInputEmail2.form-control(type='text', placeholder='Password...' name='password')
     button.btn.btn-primary(type='submit') Login
-      
+  
 
       
       

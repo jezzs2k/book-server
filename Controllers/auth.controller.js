@@ -14,5 +14,11 @@ module.exports.postLogin = (req, res) => {
     errors.push('Password is require?')
   }
   
+  if(errors.length > 0){
+    res.redirect('/login', {
+      errors
+    })
+  }
+  
   
 };
