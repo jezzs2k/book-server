@@ -27,19 +27,13 @@
       "name": "Vũ Thanh Hiếu Đẹp trai",
       "phone": "0966187232",
       "email": "hieu@gmail.com",
-      "password": "123123"
+      "password": "123123",
+      "isAdmin": true
     },
     {
       "id": "oACesTOTJ",
       "name": "test update",
       "phone": "0011223344"
-    },
-    {
-      "id": "O0Lw6KOei",
-      "name": "vuthanhhieu00@gmail.com",
-      "phone": "0966187232",
-      "email": "vuthanhhieu00@gmail.com",
-      "password": "111111"
     }
   ],
   "transactions": []
