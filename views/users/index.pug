@@ -1,4 +1,7 @@
-extends ../layout
+if admin
+  extends ../layoutAdmin
+else
+  extends ../layout
 
 block content
   h2.text-center List User
@@ -11,9 +14,9 @@ block content
             h5.mb-1= user.name
             small 3 days ago
           p.mb-1= user.phone
-            
+
     else
       h2.text-center Don't have User
       a(href='/') Back to Home
-            
+
   a(href='/users/create') Create new user
