@@ -14,8 +14,12 @@ module.exports.getTransactions = (req, res) => {
       transactions
     });
   } else {
+    const transactions_user = transactions.filter((item) => {
+      return item.userId === user.id
+    })
     res.render("transaction/index.pug", {
-      admin: user.isAdmin
+      admin: user.isAdmin,
+      transactions: [...transactions_user]
     });
   }
 };

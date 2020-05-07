@@ -1,7 +1,6 @@
 extends ../layout
 
 block content
-  if admin
     if !error
       h2.text-center List Transaction
       table.table
@@ -30,6 +29,3 @@ block content
         .alert.alert-danger(role='alert')= error
 
     a(href='/transactions/create') Create new transaction
-  else
-    h2.text-center It is feature of admin !
-    a(href="/") Back to home
