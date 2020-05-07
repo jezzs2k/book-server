@@ -1,8 +1,4 @@
-if admin
-  extends ../layoutAdmin
-else
-  extends ../layout
-
+extends ../layout
 block content
   h2.text-center List User
   .list-group
@@ -20,3 +16,4 @@ block content
       a(href='/') Back to Home
 
   a(href='/users/create') Create new user
+

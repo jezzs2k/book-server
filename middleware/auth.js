@@ -10,7 +10,7 @@ module.exports = (req, res, next) => {
   
   if(!user){
     res.render('auth/login.pug', {
-      errors: ['You dose exists!'];
+      errors: ['You dose not exists!'];
     })
     return
   }

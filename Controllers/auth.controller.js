@@ -26,7 +26,7 @@ module.exports.postLogin = (req, res) => {
   
   if(!user){
     res.render('auth/login.pug', {
-      errors: ['User dose exists']
+      errors: ['User dose not exists']
     })
     return;
   }
