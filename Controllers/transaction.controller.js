@@ -4,19 +4,19 @@ const db = require("../db.js");
 module.exports.getTransactions = (req, res) => {
   const transactions = db.get("transactions").value();
 
-  const userId = req.cookies;
+  const userId = req.cookies.auth;
   
-  console.log(userId);
-  
-  return;
-  const user = db.get("transactions").find({ id: userId });
+  const user = db.get("users").find({ id: userId }).value();
 
   if (user.isAdmin) {
     res.render("transaction/index.pug", {
+      admin: user.isAdmin,
       transactions
     });
   } else {
-    res.send("It is feature of admin!");
+    res.render("transaction/index.pug", {
+      admin: user.isAdmin
+    });
   }
 };
 

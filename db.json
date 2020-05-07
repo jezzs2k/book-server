@@ -33,7 +33,9 @@
     {
       "id": "oACesTOTJ",
       "name": "test update",
-      "phone": "0011223344"
+      "phone": "0011223344",
+      "email": "test@gmail.com",
+      "password": "123123"
     }
   ],
   "transactions": []
