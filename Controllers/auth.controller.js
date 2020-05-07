@@ -5,7 +5,7 @@ module.exports.login = (req, res) => {
 };
 
 module.exports.postLogin = (req, res) => {
-  const errors = [];
+  let errors = [];
   if(!req.body.email){
     errors.push('Email is require?')
   }
@@ -15,10 +15,13 @@ module.exports.postLogin = (req, res) => {
   }
   
   if(errors.length > 0){
-    res.redirect('/login', {
+    res.render('auth/login.pug', {
       errors
     })
   }
   
+  const user = db.get('users').find({email: req.body.email}).value();
   
+  res.cookie('auth', user.id)
+  res.redirect('/users');
 };
