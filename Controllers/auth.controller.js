@@ -18,9 +18,25 @@ module.exports.postLogin = (req, res) => {
     res.render('auth/login.pug', {
       errors
     })
+    
+    return;
   }
   
   const user = db.get('users').find({email: req.body.email}).value();
+  
+  if(!user){
+    res.render('auth/login.pug', {
+      errors: ['User dose exists']
+    })
+    return;
+  }
+  
+  if(user.password !== req.body.password){
+    res.render('auth/login.pug', {
+      errors: ['Password-wrong']
+    })
+    return;
+  }
   
   res.cookie('auth', user.id)
   res.redirect('/users');
