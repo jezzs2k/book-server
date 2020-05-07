@@ -16,9 +16,22 @@ module.exports.postCreateUser = (req, res) => {
   const data = {
     id: shortid.generate(),
     name: req.body.name,
-    phone: req.body.phone
+    phone: req.body.phone,
+    email: req.body.email,
+    password: req.body.password
   };
-
+  
+  const user = db.get("users")
+    .find({email: req.body.email})
+    .value();
+  
+  if(user){
+    res.render("users/create.pug", {
+      error: 'email have exists'
+    });
+    return;
+  }
+  
   db.get("users")
     .push(data)
     .write();
