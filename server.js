@@ -18,10 +18,7 @@ app.get("/", (req, res) => {
 });
 
 
-//test sendGrid
-const sendEmail = require('./send-email.js');
 
-sendEmail();
 // sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 // const msg = {
