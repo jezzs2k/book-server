@@ -12,10 +12,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.set("view engine", "pug");
 
-app.get("/", (req, res) => {
-  res.render("./index.pug");
-});
-
 const authMiddleware = require("./middleware/auth.js");
 
 //Router
@@ -24,7 +20,7 @@ const usersRoute = require("./Routes/user.route.js");
 const transactionsRoute = require("./Routes/transaction.route.js");
 const authRoute = require("./Routes/auth.route.js");
 
-app.use("/books", authMiddleware, booksRoute);
+app.use("/", authMiddleware, booksRoute);
 app.use("/users", authMiddleware, usersRoute);
 app.use("/transactions", authMiddleware, transactionsRoute);
 app.use("/auth", authRoute);

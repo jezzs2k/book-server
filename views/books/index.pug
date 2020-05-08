@@ -8,18 +8,38 @@ block content
         each book in books
             .col-sm-3.mb-2
               a(href=`/books/${book.id}/update`)
-              .card(style='width: 18rem;')
-                img.card-img-top(src=book.img, alt='Card image cap' style='height: 10rem;')
-                .card-body
-                  h5.card-title= book.name
-                  p.card-text
-                    book.des
-                  a.btn.btn-primary(href='#') Detail
-                  br
-                  a(href=`/books/${book.id}/delete` class='ml-auto') Delete
+                .card
+                  img.card-img-top(src=book.img, alt='Card image cap' style='height: 10rem;')
+                  .card-body
+                    h5.card-title= book.name
+                    p.card-text
+                      book.des
+                    a.btn.btn-primary(href='#') Detail
+                    br
+                    a(href=`/books/${book.id}/delete` class='ml-auto') Delete
       else
         h2.text-center Don't have books in your store
         a(href='/') Back to Home
+  -    
+    var page = 1;
+    
+  nav(aria-label='Page navigation example' style='display: flex; justify-content: center')
+    ul.pagination
+      li.page-item
+        a.page-link(href='#', aria-label='Previous')
+          span(aria-hidden='true') &laquo;
+          span.sr-only Previous
+      li.page-item
+        a.page-link(href=`https://fuchsia-rift-bee.glitch.me/?${page}`) 1
+      li.page-item
+        a.page-link(href='#') 2
+      li.page-item
+        a.page-link(href='#') 3
+      li.page-item
+        a.page-link(href='#', aria-label='Next')
+          span(aria-hidden='true') &raquo;
+          span.sr-only Next
+        
 
 
   a(href='/books/create') create new book
