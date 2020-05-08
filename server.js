@@ -18,8 +18,6 @@ app.get("/", (req, res) => {
   res.render("./index.pug");
 });
 
-
-
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const msg = {
