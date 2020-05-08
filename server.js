@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const shortid = require("shortid");
 const cookieParser = require("cookie-parser");
+const sgMail = require('@sendgrid/mail');
 
 
 const db = require("./db.js");
@@ -19,17 +20,17 @@ app.get("/", (req, res) => {
 
 
 
-// sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-// const msg = {
-//   to: "vuthanhhieu00@gmail.com",
-//   from: "vuthanhieu2000@gmail.com",
-//   subject: "send with senGrid but just is test for fun",
-//   text: "hello friend, you want acceppt gmail",
-//   html: "<strong>hello friend, you want acceppt gmail</strong>"
-// };
+const msg = {
+  to: "vuthanhhieu00@gmail.com",
+  from: "vuthanhieu2000@gmail.com",
+  subject: "send with senGrid but just is test for fun",
+  text: "hello friend, you want acceppt gmail",
+  html: "<strong>hello friend, you want acceppt gmail</strong>"
+};
 
-// sgMail.send(msg);
+sgMail.send(msg);
 
 const authMiddleware = require("./middleware/auth.js");
 
