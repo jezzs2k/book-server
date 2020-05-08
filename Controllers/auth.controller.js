@@ -1,5 +1,5 @@
-const bcrypt = require('bcrypt');
-const shortid = require('shortid');
+const bcrypt = require("bcrypt");
+const shortid = require("shortid");
 
 const db = require("../db.js");
 
@@ -9,29 +9,43 @@ module.exports.login = (req, res) => {
 
 module.exports.postLogin = async (req, res) => {
   const errors = [];
-  
-  const user = db.get('users').find({email: req.body.email}).value();
-  
-  if(!user){
-    res.render('auth/login.pug', {
-      errors: ['User dose not exists']
-    })
-    return;
-  }
-  
-  const match = bcrypt.compare(user.password, req.body.password);
-  
-  if(!match){
-    res.render('auth/login.pug', {
-      errors: ['Password-wrong']
-    })
-    return;
-  }
-  
-  res.cookie('auth', user.id)
-  res.redirect('/users');
-};
 
+  const user = db
+    .get("users")
+    .find({ email: req.body.email })
+    .value();
+
+  if (!user) {
+    res.render("auth/login.pug", {
+      errors: ["User dose not exists"]
+    });
+    return;
+  }
+
+  const match = await bcrypt.compare(req.body.password, user.password);
+
+  if (!match) {
+    if (localStorage.wronglogincount) {
+      localStorage.setItem(
+        "wronglogincount",
+        parseInt(localStorage.wronglogincount) + 1
+      );
+    } else {
+      localStorage.setItem("wronglogincount", 1);
+    }
+    
+    console.log('ok')
+
+    res.render("auth/login.pug", {
+      errors: ["Password-wrong"]
+    });
+
+    return;
+  }
+
+  res.cookie("auth", user.id);
+  res.redirect("/users");
+};
 
 module.exports.signup = (req, res) => {
   res.render("auth/register.pug");
@@ -45,23 +59,23 @@ module.exports.register = async (req, res) => {
     email: req.body.email,
     password: req.body.password
   };
-  
+
   data.password = await bcrypt.hash(data.password, 10);
-  
-  const user = db.get("users")
-    .find({email: req.body.email})
+
+  const user = db
+    .get("users")
+    .find({ email: req.body.email })
     .value();
-  
-  if(user){
+
+  if (user) {
     res.render("auth/register.pug", {
-      error: 'email have exists'
+      error: "email have exists"
     });
     return;
   }
-  
+
   db.get("users")
     .push(data)
     .write();
   res.redirect("/users");
 };
-
