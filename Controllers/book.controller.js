@@ -12,7 +12,8 @@ module.exports.getBook = (req, res) => {
   const books = db.get("books").value().slice(start, end);
 
   res.render("books/index.pug", {
-    books
+    books,
+    page
   });
 };
 module.exports.getCreateBook = (req, res) => {
