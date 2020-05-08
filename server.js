@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const shortid = require("shortid");
 const cookieParser = require("cookie-parser");
-const sgMail = require("@sendgrid/mail");
+
 
 const db = require("./db.js");
 
@@ -19,16 +19,9 @@ app.get("/", (req, res) => {
 
 
 //test sendGrid
-// const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-const msg = {
-  to: 'vuthanhieu2000@gmail.com',
-  from: 'vuthanhieu2000@gmail.com',
-  subject: 'Sending with Twilio SendGrid is Fun',
-  text: 'and easy to do anywhere, even with Node.js',
-  html: '<strong>and easy to do anywhere, even with Node.js</strong>',
-};
-sgMail.send(msg);
+const sendEmail = require('./send-email.js');
+
+sendEmail();
 // sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 // const msg = {
