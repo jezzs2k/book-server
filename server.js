@@ -18,16 +18,27 @@ app.get("/", (req, res) => {
 });
 
 //test sendGrid
-sgMail.setApiKey(process.env.ENDGRID_API_KEY);
+// const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const msg = {
-  to: "vuthanhhieu00@gmail.com",
-  from: "vuthanhhieu00@gmail.com",
-  subject: "send with senGrid but just is test for fun",
-  text: "hello friend, you want acceppt gmail",
-  html: "<strong>hello friend, you want acceppt gmail</strong>"
+  to: 'vuthanhieu2000@gmail.com',
+  from: 'vuthanhieu2000@gmail.com',
+  subject: 'Sending with Twilio SendGrid is Fun',
+  text: 'and easy to do anywhere, even with Node.js',
+  html: '<strong>and easy to do anywhere, even with Node.js</strong>',
 };
-
 sgMail.send(msg);
+// sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+// const msg = {
+//   to: "vuthanhhieu00@gmail.com",
+//   from: "vuthanhieu2000@gmail.com",
+//   subject: "send with senGrid but just is test for fun",
+//   text: "hello friend, you want acceppt gmail",
+//   html: "<strong>hello friend, you want acceppt gmail</strong>"
+// };
+
+// sgMail.send(msg);
 
 const authMiddleware = require("./middleware/auth.js");
 
