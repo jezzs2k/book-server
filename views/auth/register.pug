@@ -4,19 +4,19 @@ block content
   if error
     .alert.alert-danger= error
   h2.text-center Create new user
-  form(action='/users' method='post')
+  form(method='post')
     .form-group
-      label(for='exampleInputEmail1') Name
-      input#exampleInputEmail1.form-control(type='text', placeholder='Name...' name='name')
+      label(for='exampleInputNamel1') Name
+      input#exampleInputName1.form-control(type='text', placeholder='Name...' name='name')
     .form-group
-      label(for='exampleInputEmail2') Phone
-      input#exampleInputEmail2.form-control(type='text', placeholder='Phone...' name='phone')
+      label(for='exampleInputPhone2') Phone
+      input#exampleInputPhone2.form-control(type='text', placeholder='Phone...' name='phone')
       .form-group
       label(for='exampleInputEmail1') Email
       input#exampleInputEmail1.form-control(type='email', placeholder='Email...' name='email')
     .form-group
-      label(for='exampleInputEmail2') Password
-      input#exampleInputEmail2.form-control(type='password', placeholder='Password...' name='password')
+      label(for='exampleInputPassword2') Password
+      input#exampleInputPassword2.form-control(type='password', placeholder='Password...' name='password')
     button.btn.btn-primary(type='submit') Submit
       
 

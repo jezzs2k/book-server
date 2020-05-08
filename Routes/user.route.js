@@ -12,12 +12,6 @@ const {
 //get user
 router.get("/", getUser);
 
-//get from create user
-router.get("/create", getCreateUser);
-
-//create new user {id: , phone: , name: }
-router.post("/", postCreateUser);
-
 //deleteuser by id
 router.get("/:id/delete", deleteUser);
 

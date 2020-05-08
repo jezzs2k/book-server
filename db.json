@@ -36,6 +36,13 @@
       "phone": "0011223344",
       "email": "test@gmail.com",
       "password": "4297f44b13955235245b2497399d7a93"
+    },
+    {
+      "id": "2Zk5YNvcV",
+      "name": "Vũ Thanh Hiếu",
+      "phone": "0966187232",
+      "email": "vuthanhhieu00@gmail.com",
+      "password": "$2b$10$7eGdcy0I5DsRFw5/KZAYtODfd0O6BBXHh/cqhM1CROudlA1pYTnVa"
     }
   ],
   "transactions": [
