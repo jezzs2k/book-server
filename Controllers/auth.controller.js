@@ -22,19 +22,30 @@ module.exports.postLogin = async (req, res) => {
     return;
   }
 
+  console.log();
+
+  if (user.wrongLoginCount && user.wrongLoginCount >= 4) {
+    res.render("auth/login.pug", {
+      errors: ["You have login than more 3 times"]
+    });
+
+    return;
+  }
+
   const match = await bcrypt.compare(req.body.password, user.password);
 
   if (!match) {
-    if (localStorage.wronglogincount) {
-      localStorage.setItem(
-        "wronglogincount",
-        parseInt(localStorage.wronglogincount) + 1
-      );
+    if (user.wrongLoginCount) {
+      db.get("users")
+        .find({ email: req.body.email })
+        .assign({ wrongLoginCount: user.wrongLoginCount + 1 })
+        .write();
     } else {
-      localStorage.setItem("wronglogincount", 1);
+      db.get("users")
+        .find({ email: req.body.email })
+        .assign({ wrongLoginCount: 1 })
+        .write();
     }
-    
-    console.log('ok')
 
     res.render("auth/login.pug", {
       errors: ["Password-wrong"]
