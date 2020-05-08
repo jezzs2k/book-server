@@ -2,6 +2,8 @@ const bcrypt = require("bcrypt");
 const shortid = require("shortid");
 const sgMail = require("@sendgrid/mail");
 
+require('dotenv').config()
+
 const db = require("../db.js");
 
 module.exports.login = (req, res) => {
@@ -79,17 +81,17 @@ module.exports.register = async (req, res) => {
     password: req.body.password,
     isActive: false
   };
-  
+
   const link = `https://faint-elderly-icecream.glitch.me/${data.id}/accept`;
-  
+
   sgMail.setApiKey(process.env.SENDGRID_API_KEY);
   const msg = {
-    to: "vuthanhieu2000@gmail.com",
+    to: data.email,
     from: "vuthanhhieu00@gmail.com",
     subject: "Sending with Twilio SendGrid is Fun",
     text: "xac nhan email",
-  
-      html: `<a href=${linl
+
+    html: `<a href=${link}>xac nhan tai khoan</a>`
   };
 
   sgMail.send(msg);
@@ -113,3 +115,18 @@ module.exports.register = async (req, res) => {
     .write();
   res.render("auth/active.pug");
 };
+
+
+module.exports.accept = (req, res) => {
+  res.render("auth/active.pug");
+};
+
+module.exports.postAccept = (req, res) => {
+  const id = req.params.id;
+  
+  db.get('users').find({id}).assign({isActive: true}).write();
+  
+  res.redirect('/auth/login');
+  
+};
+

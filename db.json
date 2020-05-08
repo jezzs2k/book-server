@@ -39,12 +39,11 @@
       "password": "4297f44b13955235245b2497399d7a93"
     },
     {
-      "id": "2Zk5YNvcV",
+      "id": "QFv_SU_Xs",
       "name": "Vũ Thanh Hiếu",
       "phone": "0966187232",
       "email": "vuthanhhieu00@gmail.com",
-      "password": "$2b$10$7eGdcy0I5DsRFw5/KZAYtODfd0O6BBXHh/cqhM1CROudlA1pYTnVa",
-      "wrongLoginCount": 2,
+      "password": "$2b$10$yIdXMIHpCRYO6sTpUoN.c.JbXYfrWXUPjduEmLJ7acBwbkOUU3mZC",
       "isActive": false
     }
   ],
