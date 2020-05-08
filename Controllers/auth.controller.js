@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const shortid = require("shortid");
+const sgMail = require("@sendgrid/mail");
 
 const db = require("../db.js");
 
@@ -22,7 +23,12 @@ module.exports.postLogin = async (req, res) => {
     return;
   }
 
-  console.log();
+  if (!user.isActive) {
+    res.render("auth/login.pug", {
+      errors: ["User dose not active, you can check email again "]
+    });
+    return;
+  }
 
   if (user.wrongLoginCount && user.wrongLoginCount >= 4) {
     res.render("auth/login.pug", {
@@ -54,7 +60,7 @@ module.exports.postLogin = async (req, res) => {
     return;
   }
 
-  res.cookie("auth", user.id,{
+  res.cookie("auth", user.id, {
     signed: true
   });
   res.redirect("/users");
@@ -70,8 +76,23 @@ module.exports.register = async (req, res) => {
     name: req.body.name,
     phone: req.body.phone,
     email: req.body.email,
-    password: req.body.password
+    password: req.body.password,
+    isActive: false
   };
+  
+  const link = `https://faint-elderly-icecream.glitch.me/${data.id}/accept`;
+  
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+  const msg = {
+    to: "vuthanhieu2000@gmail.com",
+    from: "vuthanhhieu00@gmail.com",
+    subject: "Sending with Twilio SendGrid is Fun",
+    text: "xac nhan email",
+  
+      html: `<a href=${linl
+  };
+
+  sgMail.send(msg);
 
   data.password = await bcrypt.hash(data.password, 10);
 
@@ -90,5 +111,5 @@ module.exports.register = async (req, res) => {
   db.get("users")
     .push(data)
     .write();
-  res.redirect("/users");
+  res.render("auth/active.pug");
 };

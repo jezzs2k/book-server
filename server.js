@@ -17,17 +17,7 @@ app.get("/", (req, res) => {
   res.render("./index.pug");
 });
 
-const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-const msg = {
-  to: 'vuthanhieu2000@gmail.com',
-  from: 'vuthanhhieu00@gmail.com',
-  subject: 'Sending with Twilio SendGrid is Fun',
-  text: 'xac nhan email',
-  html: '<a href="https://elemental-future-furniture.glitch.me/auth/:userId/accept">xac nhan tai khoan</a>'
-};
 
-sgMail.send(msg);
 
 const authMiddleware = require("./middleware/auth.js");
 

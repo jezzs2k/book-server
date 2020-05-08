@@ -44,7 +44,8 @@
       "phone": "0966187232",
       "email": "vuthanhhieu00@gmail.com",
       "password": "$2b$10$7eGdcy0I5DsRFw5/KZAYtODfd0O6BBXHh/cqhM1CROudlA1pYTnVa",
-      "wrongLoginCount": 1
+      "wrongLoginCount": 2,
+      "isActive": false
     }
   ],
   "transactions": [
