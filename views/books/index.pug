@@ -2,18 +2,24 @@ extends ../layout
 
 block content
   h2.text-center Books
-  .list-group
-    if books.length > 0
-      each book in books
-        a(href=`/books/${book.id}/delete` class='ml-auto') Delete
-        a.list-group-item.mb-2.list-group-item-action.flex-column.align-items-start.active(href=`/books/${book.id}/update`)
-          .d-flex.w-100.justify-content-between
-            h5.mb-1= book.title
-            small 3 days ago
-          p.mb-1= book.des
-    else
-      h2.text-center Don't have books in your store
-      a(href='/') Back to Home
+  .container
+    .row
+      if books.length > 0
+        each book in books
+            .col-sm-3.mb-2
+              a(href=`/books/${book.id}/update`)
+              .card(style='width: 18rem;')
+                img.card-img-top(src=book.img, alt='Card image cap' style='height: 10rem;')
+                .card-body
+                  h5.card-title= book.name
+                  p.card-text
+                    book.des
+                  a.btn.btn-primary(href='#') Detail
+                  br
+                  a(href=`/books/${book.id}/delete` class='ml-auto') Delete
+      else
+        h2.text-center Don't have books in your store
+        a(href='/') Back to Home
 
 
   a(href='/books/create') create new book

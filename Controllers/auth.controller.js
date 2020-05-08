@@ -93,7 +93,6 @@ module.exports.register = async (req, res) => {
     html: `<a href=${link}>xac nhan tai khoan</a>`
   };
 
-
   data.password = await bcrypt.hash(data.password, 10);
 
   const user = db
@@ -111,7 +110,7 @@ module.exports.register = async (req, res) => {
   db.get("users")
     .push(data)
     .write();
-  
+
   sgMail.send(msg);
   res.render("auth/active.pug");
 };
