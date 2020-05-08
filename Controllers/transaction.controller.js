@@ -5,8 +5,11 @@ module.exports.getTransactions = (req, res) => {
   const transactions = db.get("transactions").value();
 
   const userId = req.cookies.auth;
-  
-  const user = db.get("users").find({ id: userId }).value();
+
+  const user = db
+    .get("users")
+    .find({ id: userId })
+    .value();
 
   if (user.isAdmin) {
     res.render("transaction/index.pug", {
@@ -14,9 +17,9 @@ module.exports.getTransactions = (req, res) => {
       transactions
     });
   } else {
-    const transactions_user = transactions.filter((item) => {
-      return item.userId === user.id
-    })
+    const transactions_user = transactions.filter(item => {
+      return item.userId === user.id;
+    });
     res.render("transaction/index.pug", {
       admin: user.isAdmin,
       transactions: [...transactions_user]

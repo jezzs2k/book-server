@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const shortid = require("shortid");
 const sgMail = require("@sendgrid/mail");
 
-require('dotenv').config()
+require("dotenv").config();
 
 const db = require("../db.js");
 
@@ -73,6 +73,7 @@ module.exports.signup = (req, res) => {
 };
 
 module.exports.register = async (req, res) => {
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
   const data = {
     id: shortid.generate(),
     name: req.body.name,
@@ -82,9 +83,7 @@ module.exports.register = async (req, res) => {
     isActive: false
   };
 
-  const link = `https://faint-elderly-icecream.glitch.me/${data.id}/accept`;
-
-  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+  const link = `https://faint-elderly-icecream.glitch.me/auth/${data.id}/accept`;
   const msg = {
     to: data.email,
     from: "vuthanhhieu00@gmail.com",
@@ -94,7 +93,6 @@ module.exports.register = async (req, res) => {
     html: `<a href=${link}>xac nhan tai khoan</a>`
   };
 
-  sgMail.send(msg);
 
   data.password = await bcrypt.hash(data.password, 10);
 
@@ -113,9 +111,10 @@ module.exports.register = async (req, res) => {
   db.get("users")
     .push(data)
     .write();
+  
+  sgMail.send(msg);
   res.render("auth/active.pug");
 };
-
 
 module.exports.accept = (req, res) => {
   res.render("auth/active.pug");
@@ -123,10 +122,11 @@ module.exports.accept = (req, res) => {
 
 module.exports.postAccept = (req, res) => {
   const id = req.params.id;
-  
-  db.get('users').find({id}).assign({isActive: true}).write();
-  
-  res.redirect('/auth/login');
-  
-};
 
+  db.get("users")
+    .find({ id })
+    .assign({ isActive: true })
+    .write();
+
+  res.redirect("/auth/login");
+};

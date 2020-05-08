@@ -5,7 +5,7 @@ module.exports = (req, res, next) => {
     res.redirect("/auth/login");
     return;
   }
-  
+
   const user = db
     .get("users")
     .find({ id: req.signedCookies.auth })

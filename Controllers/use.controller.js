@@ -8,7 +8,6 @@ module.exports.getUser = (req, res) => {
   });
 };
 
-
 module.exports.deleteUser = (req, res) => {
   const id = req.params.id;
   db.get("users")
@@ -16,7 +15,7 @@ module.exports.deleteUser = (req, res) => {
     .write();
 
   res.redirect("/users");
-}
+};
 
 module.exports.getUpdateUser = (req, res) => {
   const id = req.params.id;
@@ -38,4 +37,4 @@ module.exports.postUpdateUser = (req, res) => {
     .write();
 
   res.redirect("/users");
-}
+};

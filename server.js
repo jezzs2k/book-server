@@ -3,7 +3,6 @@ const app = express();
 const shortid = require("shortid");
 const cookieParser = require("cookie-parser");
 
-
 const db = require("./db.js");
 
 app.use(cookieParser("hieuvu thnah"));
@@ -16,8 +15,6 @@ app.set("view engine", "pug");
 app.get("/", (req, res) => {
   res.render("./index.pug");
 });
-
-
 
 const authMiddleware = require("./middleware/auth.js");
 

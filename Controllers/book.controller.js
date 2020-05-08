@@ -3,14 +3,14 @@ const db = require("../db.js");
 
 module.exports.getBook = (req, res) => {
   const books = db.get("books").value();
-  
+
   res.render("books/index.pug", {
     books
   });
-}
+};
 module.exports.getCreateBook = (req, res) => {
   res.render("books/create.pug");
-}
+};
 
 module.exports.postCreateBook = (req, res) => {
   const data = {
@@ -23,7 +23,7 @@ module.exports.postCreateBook = (req, res) => {
     .push(data)
     .write();
   res.redirect("/books");
-}
+};
 
 module.exports.deleteBook = (req, res) => {
   const id = req.params.id;
@@ -32,7 +32,7 @@ module.exports.deleteBook = (req, res) => {
     .write();
 
   res.redirect("/books");
-}
+};
 
 module.exports.getUpdateBook = (req, res) => {
   const id = req.params.id;
@@ -43,7 +43,7 @@ module.exports.getUpdateBook = (req, res) => {
     .value();
 
   res.render("books/update", { book });
-}
+};
 
 module.exports.postUpdateBook = (req, res) => {
   const id = req.params.id;
