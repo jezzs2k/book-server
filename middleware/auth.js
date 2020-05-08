@@ -1,13 +1,14 @@
 const db = require("../db");
 
 module.exports = (req, res, next) => {
-  if (!req.cookies.auth) {
+  if (!req.signedCookies.auth) {
     res.redirect("/auth/login");
     return;
   }
+  
   const user = db
     .get("users")
-    .find({ id: req.cookies.auth })
+    .find({ id: req.signedCookies.auth })
     .value();
 
   if (!user) {
@@ -18,6 +19,5 @@ module.exports = (req, res, next) => {
   }
 
   res.locals.user = user;
-
   next();
 };

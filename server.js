@@ -5,7 +5,7 @@ const cookieParser = require("cookie-parser");
 
 const db = require("./db.js");
 
-app.use(cookieParser());
+app.use(cookieParser('hieuvu thnah'));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
