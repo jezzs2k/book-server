@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 const shortid = require("shortid");
 const cookieParser = require("cookie-parser");
-const sgMail = require('@sendgrid/mail');
 
 
 const db = require("./db.js");
@@ -18,14 +17,14 @@ app.get("/", (req, res) => {
   res.render("./index.pug");
 });
 
+const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-
 const msg = {
-  to: "vuthanhhieu00@gmail.com",
-  from: "vuthanhieu2000@gmail.com",
-  subject: "send with senGrid but just is test for fun",
-  text: "hello friend, you want acceppt gmail",
-  html: "<strong>hello friend, you want acceppt gmail</strong>"
+  to: 'vuthanhieu2000@gmail.com',
+  from: 'vuthanhhieu00@gmail.com',
+  subject: 'Sending with Twilio SendGrid is Fun',
+  text: 'xac nhan email',
+  html: '<a href="https://elemental-future-furniture.glitch.me/auth/:userId/accept">xac nhan tai khoan</a>'
 };
 
 sgMail.send(msg);
