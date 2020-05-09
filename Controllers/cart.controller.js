@@ -59,7 +59,7 @@ module.exports.addToCart = (req, res) => {
     .find({ sessionId })
     .write();
 
-  if (customer.carts && bookId in customer.carts) {
+  if (customer && customer.carts && bookId in customer.carts) {
     db.get("sessions")
       .find({ sessionId })
       .assign({
@@ -67,27 +67,51 @@ module.exports.addToCart = (req, res) => {
       })
       .write();
   } else {
-    db.get("sessions")
+    if(customer && customer.cart){
+      db.get("sessions")
       .find({ sessionId })
       .assign({ carts: { ...customer.carts, [bookId]: 1 } })
       .write();
+    }else{
+      db.get("sessions")
+      .find({ sessionId })
+      .assign({ carts: {[bookId]: 1 } })
+      .write();
+    }
   }
+  
+  console.log(customer);
 };
 
-
-module.exports.rentalBook = (req ,res) => {
-  if(!req.signedCookies.auth){
-    res.redirect('/auth/login');
+module.exports.rentalBook = (req, res) => {
+  if (!req.signedCookies.auth) {
+    res.redirect("/auth/login");
     return;
   }
-  
-   db.get("users")
-      .find({ id: req.signedCookies.auth })
-      .assign({carts: [] })
-      .value();
+  const user = db
+    .get("users")
+    .find({ id: req.signedCookies.auth })
+    .value();
+  if (user.carts) {
+    user.carts.map(i => {
+      db.get("transactions")
+        .push({
+          id: shortid.generate(),
+          userId: user.id,
+          bookId: i.id,
+          isComplete: false
+        })
+        .write();
+      return 1;
+    });
+  }
 
-  
-  
-}
+  db.get("users")
+    .find({ id: req.signedCookies.auth })
+    .assign({ ...user, carts: [] })
+    .value();
+
+  res.redirect("/transactions");
+};
 
 module.exports.deleteBook = (req, res) => {};

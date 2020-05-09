@@ -53,7 +53,7 @@ module.exports.postUpdateUser = async (req, res) => {
     .join("/");
 
   const result = await cloudinary.uploader.upload(
-    `https://enchanted-phase-cushion.glitch.me/${urlImg}`
+    `https://playful-danthus.glitch.me//${urlImg}`
   );
 
   db.get("users")

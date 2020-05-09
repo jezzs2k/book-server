@@ -11,14 +11,13 @@ module.exports.getTransactions = (req, res) => {
     .find({ id: userId })
     .value();
 
-  if (user.isAdmin) {
+  if (user && user.isAdmin) {
     res.render("transaction/index.pug", {
-      admin: user.isAdmin,
       transactions
     });
   } else {
     const transactions_user = transactions.filter(item => {
-      return item.userId === user.id;
+      return item.userId === userId;
     });
     res.render("transaction/index.pug", {
       transactions: [...transactions_user]
