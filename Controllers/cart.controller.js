@@ -11,14 +11,19 @@ module.exports.getCart = (req, res) => {
 
   const carts = null;
 
-  if (cartInSession.carts) {
-    carts = cartInSession.carts.map(i => {
-      console.log(i);
-      // return db.get('books').find({i});
-    });
+  if (cartInSession && cartInSession.carts) {
+    for(const bookId in cartInSession.carts){
+      
+      const book = db.get('books').find({id: bookId}).value();
+      
+      carts.push({
+        ...book,
+        amount: cartInSession.carts[bookId]
+      })
+    }
   }
 
-  console.log(cartInSession);
+  console.log(carts);
 
   return;
 
@@ -51,18 +56,17 @@ module.exports.addToCart = (req, res) => {
     .find({ sessionId })
     .write();
 
-  if (bookId in customer) {
-    console.log(customer);
+  if (customer.carts && bookId in customer.carts) {
     db.get("sessions")
       .find({ sessionId })
       .assign({
-        carts: [...customer.carts, { [bookId]: customer[bookId] + 1 }]
+        carts: { ...customer.carts, [bookId]: customer.carts[bookId] + 1 }
       })
       .write();
   } else {
     db.get("sessions")
       .find({ sessionId })
-      .assign({ carts: [{ [bookId]: 1 }] })
+      .assign({ carts: { ...customer.carts,[bookId]: 1 } })
       .write();
   }
 
