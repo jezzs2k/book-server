@@ -3,6 +3,7 @@ const app = express();
 const shortid = require("shortid");
 const cookieParser = require("cookie-parser");
 
+app.use(express.static('./public'))
 
 const db = require("./db.js");
 

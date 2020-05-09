@@ -48,18 +48,22 @@ module.exports.getUpdateUser = (req, res) => {
 module.exports.postUpdateUser = (req, res) => {
   const id = req.params.id;
   
-  const urlImg = req.body.avatar;
+  const urlImg = req.file.path.split('/').splice(1).join('/');
+
  
-  console.log(req.file, req.body)
   
-  // cloudinary.uploader.upload('https://picsum.photos/200', function(error, result) {console.log(result, error)});
   
-  return;
-  
-  db.get("users")
+  cloudinary.uploader.upload(`https://enchanted-phase-cushion.glitch.me/${urlImg}`, function(error, result) {
+    console.log(result);
+    return;
+    db.get("users")
     .find({ id })
-    .assign({ ...req.body })
+    .assign({ ...req.body, avatar: result.path })
     .write();
+  });
+
+  
+  
 
   res.redirect("/users");
 };
