@@ -1,7 +1,8 @@
 extends ../layout
 
 block content
-    if carts
+    h2.ml-3 Carts
+    if carts && carts.length > 0
       table.table
         thead
         tbody
@@ -18,3 +19,5 @@ block content
               td
                 h2 1000000 $
     else
+      h2.text-center Cart is empty !
+      a(href='/').ml-3  Back to book stores
