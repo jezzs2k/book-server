@@ -28,7 +28,7 @@ module.exports.getCart = (req, res) => {
   if (userId) {
     const user = db
       .get("users")
-      .find({ userId })
+      .find({ id: userId })
       .value({ carts });
     db.get("users")
       .find({ userId })
@@ -73,5 +73,21 @@ module.exports.addToCart = (req, res) => {
       .write();
   }
 };
+
+
+module.exports.rentalBook = (req ,res) => {
+  if(!req.signedCookies.auth){
+    res.redirect('/auth/login');
+    return;
+  }
+  
+   db.get("users")
+      .find({ id: req.signedCookies.auth })
+      .assign({carts: [] })
+      .value();
+
+  
+  
+}
 
 module.exports.deleteBook = (req, res) => {};
