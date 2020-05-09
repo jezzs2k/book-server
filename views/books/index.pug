@@ -12,11 +12,9 @@ block content
                   img.card-img-top(src=book.img, alt='Card image cap' style='height: 10rem;')
                   .card-body
                     h5.card-title= book.name
-                    p.card-text
-                      book.des
-                    a.btn.btn-primary(href='#') Detail
-                    br
-                    a(href=`/books/${book.id}/delete` class='ml-auto') Delete
+                    p.card-text= book.des
+                    a.btn.btn-primary(href=`/cart/${book.id}/add`) Add To Cart
+
       else
         h2.text-center Don't have books in your store
         a(href='/') Back to Home
