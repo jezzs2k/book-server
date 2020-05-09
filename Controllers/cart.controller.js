@@ -9,42 +9,45 @@ module.exports.getCart = (req, res) => {
     .find({ sessionId })
     .value();
 
-  const carts = null;
+  const carts = [];
 
   if (cartInSession && cartInSession.carts) {
-    for(const bookId in cartInSession.carts){
-      
-      const book = db.get('books').find({id: bookId}).value();
-      
+    for (const bookId in cartInSession.carts) {
+      const book = db
+        .get("books")
+        .find({ id: bookId })
+        .value();
+
       carts.push({
         ...book,
         amount: cartInSession.carts[bookId]
-      })
+      });
     }
   }
-
-  console.log(carts);
-
-  return;
 
   if (userId) {
     const user = db
       .get("users")
       .find({ userId })
-      .value();
+      .value({ carts });
     db.get("users")
       .find({ userId })
-      .assign({ ...user, carts: [] })
+      .assign({ ...user, carts: [...carts] })
+      .value();
+
+    db.get("sessions")
+      .remove({ sessionId })
       .value();
 
     res.render("cart/index.pug", {
-      carts: cartInSession
+      carts
     });
+
     return;
   }
 
   res.render("cart/index.pug", {
-    carts: cartInSession
+    carts
   });
 };
 module.exports.addToCart = (req, res) => {
@@ -66,11 +69,9 @@ module.exports.addToCart = (req, res) => {
   } else {
     db.get("sessions")
       .find({ sessionId })
-      .assign({ carts: { ...customer.carts,[bookId]: 1 } })
+      .assign({ carts: { ...customer.carts, [bookId]: 1 } })
       .write();
   }
-
-  console.log(customer);
 };
 
 module.exports.deleteBook = (req, res) => {};

@@ -9,15 +9,16 @@ block content
           each cart in carts
             tr
               td
-                img(src='https://picsum.photos/200/300', style='max-width: 100px')
+                img(src=cart.img, style='max-width: 100px')
               td
-                h2 Sanh hay hay hay
+                h2= cart.name
                 div
-                  p Description
+                  p= cart.des
                   a(href='/cart/:id/delete')
                     | Delete
               td
                 h2 1000000 $
+      a('/transaction/create') Thue sach
     else
       h2.text-center Cart is empty !
       a(href='/').ml-3  Back to book stores

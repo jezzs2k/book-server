@@ -3,7 +3,7 @@ const db = require("../db");
 
 module.exports = (req, res, next) => {
   const sessionId = shortid.generate();
-  if (!req.signedCookies.auth) {
+  if (!req.signedCookies.sessionId) {
     res.cookie("sessionId", sessionId, {
       signed: true
     });
