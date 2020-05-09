@@ -14,6 +14,9 @@ app.use(express.urlencoded({ extended: true }));
 
 app.set("view engine", "pug");
 
+//session
+
+
 const authMiddleware = require("./middleware/auth.js");
 
 //Router

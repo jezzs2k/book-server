@@ -20,7 +20,7 @@ module.exports.getBook = (req, res) => {
   res.render("books/index.pug", {
     books,
     page,
-    url: "https://fuchsia-rift-bee.glitch.me/"
+    url: "https://playful-danthus.glitch.me/"
   });
 };
 module.exports.getCreateBook = (req, res) => {
