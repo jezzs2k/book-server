@@ -6,7 +6,7 @@ block content
       each user in users
           .list(style= 'display: flex;')
             .avatar.mr-2.ml-2
-              img(src='https://picsum.photos/100' style='width: 80px; border-radius: 50%')
+              img(src= user.avatar style='width: 80px; border-radius: 50%')
             .info-user
               h5.mb-1= user.name
               small 3 days ago

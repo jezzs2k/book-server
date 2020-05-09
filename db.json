@@ -376,12 +376,12 @@
   "users": [
     {
       "id": "IDal-4NpZ",
-      "name": "Vũ Thanh Hiếu",
+      "name": "Vũ Thanh Hiếu as",
       "phone": "0966187232",
       "email": "vuthanhhieu00@gmail.com",
       "password": "$2b$10$d34bvbemBJLhqdQ3cbKaR.TifPicXtBVGK7NcrKXhejqNaYg1X/yu",
       "isActive": true,
-      "avatar": "Screenshot (20).png"
+      "avatar": "https://res.cloudinary.com/dt9wztdih/image/upload/v1589004192/wvlcp3zunwapomwyznxg.png"
     }
   ],
   "transactions": [
