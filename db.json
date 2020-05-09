@@ -380,7 +380,8 @@
       "phone": "0966187232",
       "email": "vuthanhhieu00@gmail.com",
       "password": "$2b$10$d34bvbemBJLhqdQ3cbKaR.TifPicXtBVGK7NcrKXhejqNaYg1X/yu",
-      "isActive": true
+      "isActive": true,
+      "avatar": "Screenshot (20).png"
     }
   ],
   "transactions": [

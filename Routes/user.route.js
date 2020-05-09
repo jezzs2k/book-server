@@ -20,7 +20,7 @@ router.get("/profile", profile);
 router.get("/:id/delete", deleteUser);
 
 //update user by id
-router.get("/:id/update", getUpdateUser);
+router.get("/profile/:id/update", getUpdateUser);
 
 //post update user
 router.post("/:id/update", postUpdateUser);
