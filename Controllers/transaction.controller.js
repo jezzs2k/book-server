@@ -21,7 +21,6 @@ module.exports.getTransactions = (req, res) => {
       return item.userId === user.id;
     });
     res.render("transaction/index.pug", {
-      admin: user.isAdmin,
       transactions: [...transactions_user]
     });
   }

@@ -80,7 +80,8 @@ module.exports.register = async (req, res) => {
     phone: req.body.phone,
     email: req.body.email,
     password: req.body.password,
-    isActive: false
+    isActive: false,
+    isAdmin: false
   };
 
   const link = `https://faint-elderly-icecream.glitch.me/auth/${data.id}/accept`;
