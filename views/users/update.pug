@@ -1,7 +1,7 @@
 extends ../layout
 block content
   h2.text-center Update user
-  form(action=`/users/${user.id}/update` method='post' enctype="multipart/form-data")
+  form(action=`/profile/users/${user.id}/update` method='post' enctype="multipart/form-data")
     .form-ground
       label(for='avatar') Avatar
       input#avatar.form-control(type='file' name='avatar')

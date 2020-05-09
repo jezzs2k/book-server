@@ -3,6 +3,7 @@ const app = express();
 const shortid = require("shortid");
 const cookieParser = require("cookie-parser");
 
+
 const db = require("./db.js");
 
 app.use(cookieParser("hieuvu thnah"));

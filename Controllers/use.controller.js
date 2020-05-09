@@ -49,10 +49,10 @@ module.exports.postUpdateUser = (req, res) => {
   const id = req.params.id;
   
   const urlImg = req.body.avatar;
+ 
+  console.log(req.file, req.body)
   
- console.log(req.body)
-  
-  cloudinary.uploader.upload(`${req.body.avatar}`, function(error, result) {console.log(result, error)});
+  // cloudinary.uploader.upload('https://picsum.photos/200', function(error, result) {console.log(result, error)});
   
   return;
   

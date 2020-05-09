@@ -1,4 +1,6 @@
 const router = require("express").Router();
+const multer  = require('multer')
+const upload = multer({ dest: './public/uploads' })
 
 const {
   getUser,
@@ -23,6 +25,6 @@ router.get("/:id/delete", deleteUser);
 router.get("/profile/:id/update", getUpdateUser);
 
 //post update user
-router.post("/:id/update", postUpdateUser);
+router.post("/profile/:id/update", upload.single('avatar'),postUpdateUser);
 
 module.exports = router;
