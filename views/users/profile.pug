@@ -1,2 +1,18 @@
 extends ../layout
 block content
+  h2.text-center List User
+  .list-group
+    if users.length > 0
+      each user in users
+          .list(style= 'display: flex;')
+            .avatar.mr-2.ml-2
+              img(src='https://picsum.photos/100' style='width: 80px; border-radius: 50%')
+            .info-user
+              h5.mb-1= user.name
+              small 3 days ago
+              p.mb-1= user.phone
+              a(href=`/users/${user.id}/delete` class='width: 100% ml-4') Delete
+              a(href=`/users/${user.id}/update` style="float: left; ") Update profile
+
+  
+

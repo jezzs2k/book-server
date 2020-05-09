@@ -8,6 +8,13 @@ module.exports.getUser = (req, res) => {
   });
 };
 
+module.exports.profile = (req, res) => {
+  const users = db.get("users").value();
+  res.render("users/profile.pug", {
+    users
+  });
+}
+
 module.exports.deleteUser = (req, res) => {
   const id = req.params.id;
   db.get("users")

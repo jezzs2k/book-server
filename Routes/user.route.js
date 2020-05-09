@@ -6,11 +6,15 @@ const {
   postCreateUser,
   deleteUser,
   getUpdateUser,
-  postUpdateUser
+  postUpdateUser,
+  profile
 } = require("../Controllers/use.controller.js");
 
 //get user
 router.get("/", getUser);
+
+router.get("/profile", profile);
+
 
 //deleteuser by id
 router.get("/:id/delete", deleteUser);
