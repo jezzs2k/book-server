@@ -32,6 +32,7 @@ app.use("/", booksRoute);
 app.use("/users", authMiddleware, usersRoute);
 app.use("/transactions", authMiddleware, transactionsRoute);
 app.use("/auth", authRoute);
+app.use("/carts", cartRoute);
 
 app.listen(process.env.PORT, () => {
   console.log("Server listening on port " + process.env.PORT);

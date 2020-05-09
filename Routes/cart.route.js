@@ -4,14 +4,13 @@ const {
   getCart,
   addToCart,
   deleteBook
-  
-} = require("../Controllers/book.controller.js");
+} = require("../Controllers/cart.controller.js");
 
 //get books
 router.get("/", getCart);
 
 //get from create book
-router.post("/:id/add", addToCart);
+router.get("/:id/add", addToCart);
 
 //create new book {id: , description: , title: }
 router.get("/:id/delete", deleteBook);
