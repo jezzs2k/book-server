@@ -19,7 +19,8 @@ module.exports.getBook = (req, res) => {
 
   res.render("books/index.pug", {
     books,
-    page
+    page,
+    url: "https://fuchsia-rift-bee.glitch.me/"
   });
 };
 module.exports.getCreateBook = (req, res) => {

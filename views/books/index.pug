@@ -20,29 +20,29 @@ block content
       else
         h2.text-center Don't have books in your store
         a(href='/') Back to Home
-    
+        
   nav(aria-label='Page navigation example' style='display: flex; justify-content: center')
     ul.pagination
       li.page-item
-        a.page-link(href=`https://fuchsia-rift-bee.glitch.me/?page=${page-1}`, aria-label='Previous')
+        a.page-link(href=`${url}?page=${page-1}`, aria-label='Previous')
           span(aria-hidden='true') &laquo;
           span.sr-only Previous
       if page > 1
         li.page-item
-          a.page-link(href=`https://fuchsia-rift-bee.glitch.me/?page=${page-1}`)= page-1
+          a.page-link(href=`${url}?page=${page-1}`)= page-1
         li.page-item
-          a.page-link(href=`https://fuchsia-rift-bee.glitch.me/?page=${page}`)= page
+          a.page-link(href=`${url}?page=${page}`)= page
         li.page-item
-          a.page-link(href=`https://fuchsia-rift-bee.glitch.me/?page=${page+1}`)= page+1
+          a.page-link(href=`${url}?page=${page+1}`)= page+1
       else
         li.page-item
-          a.page-link(href=`https://fuchsia-rift-bee.glitch.me/?page=${page}`)= page
+          a.page-link(href=`${url}?page=${page}`)= page
         li.page-item
-          a.page-link(href=`https://fuchsia-rift-bee.glitch.me/?page=${page+1}`)= page+1
+          a.page-link(href=`${url}?page=${page+1}`)= page+1
         li.page-item
-          a.page-link(href=`https://fuchsia-rift-bee.glitch.me/?page=${page+2}`)= page+2
+          a.page-link(href=`${url}?page=${page+2}`)= page+2
       li.page-item
-        a.page-link(href=`https://fuchsia-rift-bee.glitch.me/?page=${page+1}`, aria-label='Next')
+        a.page-link(href=`${url}?page=${page+1}`, aria-label='Next')
           span(aria-hidden='true') &raquo;
           span.sr-only Next
         
