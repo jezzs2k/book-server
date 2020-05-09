@@ -15,12 +15,12 @@ app.set("view engine", "pug");
 const authMiddleware = require("./middleware/auth.js");
 
 //Router
-const booksRoute = require("./Routes/book.route.js");
+// const booksRoute = require("./Routes/book.route.js");
 const usersRoute = require("./Routes/user.route.js");
 const transactionsRoute = require("./Routes/transaction.route.js");
 const authRoute = require("./Routes/auth.route.js");
 
-app.use("/", authMiddleware, booksRoute);
+// app.use("/", authMiddleware, booksRoute);
 app.use("/users", authMiddleware, usersRoute);
 app.use("/transactions", authMiddleware, transactionsRoute);
 app.use("/auth", authRoute);
