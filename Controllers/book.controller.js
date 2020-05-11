@@ -1,7 +1,7 @@
 const shortid = require("shortid");
-const db = require("../db.js");
+const Book = require("../Model/book.model.js");
 
-module.exports.getBook = (req, res) => {
+module.exports.getBook = async (req, res) => {
   let page = parseInt(req.query.page) || 1;
 
   if (page === 0) {
@@ -12,10 +12,7 @@ module.exports.getBook = (req, res) => {
   const start = (page - 1) * perPage;
   const end = (page - 1) * perPage + perPage;
 
-  const books = db
-    .get("books")
-    .value()
-    .slice(start, end);
+  const books = await Book.find().limit(end - start);
 
   res.render("books/index.pug", {
     books,
@@ -28,46 +25,36 @@ module.exports.getCreateBook = (req, res) => {
   res.render("books/create.pug");
 };
 
-module.exports.postCreateBook = (req, res) => {
-  const data = {
-    id: shortid.generate(),
+module.exports.postCreateBook = async (req, res) => {
+  const book = new Book({
     title: req.body.title,
     des: req.body.des
-  };
+  });
 
-  db.get("books")
-    .push(data)
-    .write();
+  await book.save();
   res.redirect("/books");
 };
 
-module.exports.deleteBook = (req, res) => {
+module.exports.deleteBook = async (req, res) => {
   const id = req.params.id;
-  db.get("books")
-    .remove(i => i.id === id)
-    .write();
+
+  await Book.findOneAndDelete({ _id: id });
 
   res.redirect("/books");
 };
 
-module.exports.getUpdateBook = (req, res) => {
+module.exports.getUpdateBook = async (req, res) => {
   const id = req.params.id;
 
-  const book = db
-    .get("books")
-    .find({ id })
-    .value();
+  const book = await Book.findById(id);
 
   res.render("books/update", { book });
 };
 
-module.exports.postUpdateBook = (req, res) => {
+module.exports.postUpdateBook = async (req, res) => {
   const id = req.params.id;
 
-  db.get("books")
-    .find({ id })
-    .assign({ ...req.body })
-    .write();
+  await Book.findOneAndUpdate({ _id: id }, { ...req.body });
 
   res.redirect("/books");
 };

@@ -7,7 +7,7 @@ block content
       if books.length > 0
         each book in books
             .col-sm-3.mb-2
-              a(href=`/books/${book.id}/update`)
+              a(href=`/${book.id}/update`)
                 .card
                   img.card-img-top(src=book.img, alt='Card image cap' style='height: 10rem;')
                   .card-body
@@ -42,4 +42,4 @@ block content
       else
         h2.text-center.ml-3 Don't have books in your store
 
-  a(href='/books/create').ml-3 create new book
+  a(href='/create').ml-3 create new book
