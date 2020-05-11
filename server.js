@@ -26,7 +26,12 @@ app.use(sessionMiddleware);
 const authMiddleware = require("./middleware/auth.js");
 
 //Router API
-const authApiRoute = require('./api/R')
+const authApiRoute = require('./api/Router/auth.js');
+const transactionApiRoute = require('./api/Router/transaction.js');
+
+
+app.use("/api/auth", authApiRoute);
+app.use("/api/transactions", transactionApiRoute);
 
 //Router
 const booksRoute = require("./Routes/book.route.js");
