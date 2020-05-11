@@ -3,12 +3,12 @@ const { MONGOURL } = require("./default.json");
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(
-      MONGOURL,
-      { useNewUrlParser: true },
-      { useFindAndModify: true },
-      { useCreateIndex: true }
-    );
+    await mongoose.connect(MONGOURL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false,
+      useCreateIndex: true
+    });
 
     console.log("connect db ....");
   } catch (err) {
