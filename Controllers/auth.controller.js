@@ -12,16 +12,18 @@ module.exports.login = (req, res) => {
 
 module.exports.postLogin = async (req, res) => {
   const errors = [];
-  
-  console.log(req.body)
-  const user = await User.findOne({ email: req.body.email });
 
-  if (!user) {
+  const user = await User.findOne({ email: req.body.email });
+  
+ 
+
+  if (user === null) {
     res.render("auth/login.pug", {
       errors: ["User dose not exists"]
     });
     return;
   }
+  
 
   if (!user.isActive) {
     res.render("auth/login.pug", {
@@ -29,16 +31,20 @@ module.exports.postLogin = async (req, res) => {
     });
     return;
   }
+  
+ 
 
-  if (user.wrongLoginCount && user.wrongLoginCount >= 4) {
+  if (user.wrongLoginCount >= 4) {
     res.render("auth/login.pug", {
       errors: ["You have login than more 3 times"]
     });
-
     return;
   }
 
   const match = await bcrypt.compare(req.body.password, user.password);
+  
+  console.log(user)
+  return;
 
   if (!match) {
     if (user.wrongLoginCount) {
@@ -78,6 +84,7 @@ module.exports.register = async (req, res) => {
     email: req.body.email,
     password: req.body.password,
     isActive: false,
+    wrongLoginCount: 0,
     isAdmin: false
   };
 
