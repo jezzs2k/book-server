@@ -28,10 +28,14 @@ const authMiddleware = require("./middleware/auth.js");
 //Router API
 const authApiRoute = require('./api/Router/auth.js');
 const transactionApiRoute = require('./api/Router/transaction.js');
+const bookApiRoute = require('./api/Router/book.js');
+const userApiRoute = require('./api/Router/user.js');
 
 
 app.use("/api/auth", authApiRoute);
 app.use("/api/transactions", transactionApiRoute);
+app.use("/api/books", bookApiRoute);
+app.use("/api/users", userApiRoute);
 
 //Router
 const booksRoute = require("./Routes/book.route.js");

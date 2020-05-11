@@ -1,5 +1,4 @@
-const shortid = require("shortid");
-const Book = require("../Model/book.model.js");
+const Book = require("../../Model/book.model.js");
 
 module.exports.getBook = async (req, res) => {
   let page = parseInt(req.query.page) || 1;
@@ -24,7 +23,7 @@ module.exports.createBook = async (req, res) => {
   });
 
   await book.save();
-  res.redirect("/books");
+  res.status(201).json({ msg: "create book", data: { book } });
 };
 
 module.exports.deleteBook = async (req, res) => {
@@ -32,7 +31,7 @@ module.exports.deleteBook = async (req, res) => {
 
   await Book.findOneAndDelete({ _id: id });
 
-  res.redirect("/");
+  res.status(200).json({ msg: "delete book", data: null });
 };
 
 module.exports.updateBook = async (req, res) => {
@@ -40,5 +39,5 @@ module.exports.updateBook = async (req, res) => {
 
   await Book.findOneAndUpdate({ _id: id }, { ...req.body });
 
-  res.redirect("/");
+  res.status(200).json({ msg: "update book", data: null });
 };
