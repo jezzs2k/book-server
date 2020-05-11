@@ -43,8 +43,6 @@ module.exports.postLogin = async (req, res) => {
 
   const match = await bcrypt.compare(req.body.password, user.password);
   
-  console.log(user)
-  return;
 
   if (!match) {
     if (user.wrongLoginCount) {
@@ -58,7 +56,7 @@ module.exports.postLogin = async (req, res) => {
         { wrongLoginCount: 1 }
       );
     }
-
+    
     res.render("auth/login.pug", {
       errors: ["Password-wrong"]
     });

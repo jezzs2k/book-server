@@ -46,9 +46,12 @@ module.exports.postUpdateUser = async (req, res) => {
     .split("/")
     .splice(1)
     .join("/");
+  
+  console.log(urlImg);
+  return;
 
   const result = await cloudinary.uploader.upload(
-    `https://playful-danthus.glitch.me//${urlImg}`
+    `https://playful-danthus.glitch.me/${urlImg}`
   );
 
   const user = await User.findOneAndUpdate(
