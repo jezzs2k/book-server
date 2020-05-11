@@ -1,10 +1,10 @@
 const bcrypt = require("bcrypt");
-const shortid = require("shortid");
 const sgMail = require("@sendgrid/mail");
+const shortid = require('shortid');
+
+const User = require("../Model/user.model.js");
 
 require("dotenv").config();
-
-const db = require("../db.js");
 
 module.exports.login = (req, res) => {
   res.render("auth/login.pug");
@@ -13,10 +13,7 @@ module.exports.login = (req, res) => {
 module.exports.postLogin = async (req, res) => {
   const errors = [];
 
-  const user = db
-    .get("users")
-    .find({ email: req.body.email })
-    .value();
+  const user = await User.findOne({ email: req.body.email });
 
   if (!user) {
     res.render("auth/login.pug", {
@@ -44,15 +41,15 @@ module.exports.postLogin = async (req, res) => {
 
   if (!match) {
     if (user.wrongLoginCount) {
-      db.get("users")
-        .find({ email: req.body.email })
-        .assign({ wrongLoginCount: user.wrongLoginCount + 1 })
-        .write();
+      const user = await User.findOneAndUpdate(
+        { _id: user._id },
+        { wrongLoginCount: user.wrongLoginCount + 1 }
+      );
     } else {
-      db.get("users")
-        .find({ email: req.body.email })
-        .assign({ wrongLoginCount: 1 })
-        .write();
+      const user = await User.findOneAndUpdate(
+        { _id: user._id },
+        { wrongLoginCount: 1 }
+      );
     }
 
     res.render("auth/login.pug", {
