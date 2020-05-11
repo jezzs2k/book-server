@@ -12,17 +12,16 @@ module.exports.getBook = (req, res) => {
   const start = (page - 1) * perPage;
   const end = (page - 1) * perPage + perPage;
 
-  const books = db
-    .get("books")
-    .value()
-    .slice(start, end);
-
+  const books = db.get('books').value();
+  console.log(books);
+  return;
   res.render("books/index.pug", {
     books,
     page,
     url: "https://playful-danthus.glitch.me/"
   });
 };
+
 module.exports.getCreateBook = (req, res) => {
   res.render("books/create.pug");
 };
