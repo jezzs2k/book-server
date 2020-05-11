@@ -16,7 +16,7 @@ module.exports.getBook = (req, res) => {
     .get("books")
     .value()
     .slice(start, end);
-  
+
   res.render("books/index.pug", {
     books,
     page,
