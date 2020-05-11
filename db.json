@@ -386,5 +386,12 @@
     }
   ],
   "transactions": [],
-  "sessions": []
+  "sessions": [
+    {
+      "sessionId": "NODqk7los",
+      "carts": {
+        "9WB1XDZ": 1
+      }
+    }
+  ]
 }

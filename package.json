@@ -20,7 +20,8 @@
     "@sendgrid/mail": "^7.1.0",
     "dotenv": "^8.2.0",
     "cloudinary": "^1.21.0",
-    "multer": "^1.4.2"
+    "multer": "^1.4.2",
+    "mongoose": "^5.9.13"
   },
   "engines": {
     "node": "12.x"
