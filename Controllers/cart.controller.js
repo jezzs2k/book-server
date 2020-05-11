@@ -1,11 +1,12 @@
 const shortid = require("shortid");
 const db = require("../db.js");
 const Session = require('../Model/session.model.js');
+const User = require('../Model/user.model.js');
 
-module.exports.getCart = (req, res) => {
+module.exports.getCart = async (req, res) => {
   const userId = req.signedCookies.userId;
   const sessionId = req.signedCookies.sessionId;
-  const cartInSession = Session.findOne({sessionId});
+  const cartInSession = await Session.findOne({sessionId});
 
   const carts = [];
 
@@ -24,18 +25,11 @@ module.exports.getCart = (req, res) => {
   }
 
   if (userId) {
-    const user = db
-      .get("users")
-      .find({ id: userId })
-      .value({ carts });
-    db.get("users")
-      .find({ userId })
-      .assign({ ...user, carts: [...carts] })
-      .value();
-
-    db.get("sessions")
-      .remove({ sessionId })
-      .value();
+    const user = await User.findOneAndUpdate({_id: userId}, {
+      ...user, carts: [...carts]
+    });
+    
+    await Session.findOneAndDelete({sessionId});
 
     res.render("cart/index.pug", {
       carts
@@ -48,16 +42,14 @@ module.exports.getCart = (req, res) => {
     carts
   });
 };
-module.exports.addToCart = (req, res) => {
+module.exports.addToCart = async (req, res) => {
   const sessionId = req.signedCookies.sessionId;
   const bookId = req.params.id;
 
-  const customer = db
-    .get("sessions")
-    .find({ sessionId })
-    .write();
+  const customer = await Session.findOne({sessionId});
 
   if (customer && customer.carts && bookId in customer.carts) {
+    const sessions
     db.get("sessions")
       .find({ sessionId })
       .assign({
