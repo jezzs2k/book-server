@@ -79,13 +79,14 @@ module.exports.register = async (req, res) => {
 
   if (user) {
     res.status(400).json({
-      msg: "User is existx"
-    })
+      msg: "User is exists",
+      data: null
+    });
     return;
   }
 
   const newUser = new User(data);
-  
+
   const link = `https://playful-danthus.glitch.me/auth/${newUser._id}/accept`;
   const msg = {
     to: data.email,
@@ -95,17 +96,23 @@ module.exports.register = async (req, res) => {
 
     html: `<a href=${link}>xac nhan tai khoan</a>`
   };
-  
+
   await newUser.save();
 
   sgMail.send(msg);
-  res.render("auth/active.pug");
+  res.status(200).json({
+    msg: "Please check your mail",
+    data: null
+  });
 };
 
-module.exports.postAccept = async (req, res) => {
+module.exports.accept = async (req, res) => {
   const id = req.params.id;
 
   await User.findOneAndUpdate({ _id: id }, { isActive: true });
 
-  res.redirect("/auth/login");
+  res.status(200).json({
+    msg: "Create user successfully",
+    data: { userId: id }
+  });
 };

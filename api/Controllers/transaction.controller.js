@@ -25,3 +25,48 @@ module.exports.getTransactions = async (req, res) => {
   }
 };
 
+module.exports.createTransaction = async (req, res) => {
+  const name = req.body.user;
+  const title = req.body.book;
+
+  const user = await User.findOne({ name });
+  const book = await Book.findOne({ title });
+
+  const newTransaction = new Transaction({
+    userId: user.id,
+    bookId: book.id,
+    isComplete: false
+  });
+
+  await newTransaction.save();
+
+  res.json(200).json({
+    msg: 'Create successfully',
+    data: {newTransaction}
+  })
+};
+
+module.exports.complete = async (req, res) => {
+  const id = req.params.id;
+
+  const transaction = await Transaction.findById(id);
+
+  if (transaction !== undefined) {
+    await Transaction.findOneAndUpdate(
+      {
+        _id: transaction._id
+      },
+      { isComplete: true }
+    );
+  } else {
+    res.json(400).json({
+    msg: 'Id is not defind',
+    data: null
+  })
+  }
+
+  res.json(200).json({
+    msg: 'is complete',
+    data: {transaction}
+  })
+};
