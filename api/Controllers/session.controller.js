@@ -1,7 +1,7 @@
-const Session = require("../Model/session.model.js");
-const User = require("../Model/user.model.js");
-const Book = require("../Model/user.model.js");
-const Transaction = require("../Model/transaction.model.js");
+const Session = require("../../Model/session.model.js");
+const User = require("../../Model/user.model.js");
+const Book = require("../../Model/user.model.js");
+const Transaction = require("../../Model/transaction.model.js");
 
 module.exports.getCart = async (req, res) => {
   const userId = req.signedCookies.userId;
@@ -70,8 +70,8 @@ module.exports.addToCart = async (req, res) => {
 module.exports.rentalBook = async (req, res) => {
   if (!req.signedCookies.auth) {
     res.status(400).json({
-    msg: "You ",
-    data: {customer}
+    msg: "You have mus login!",
+    data: null
   })
     return;
   }
@@ -94,7 +94,8 @@ module.exports.rentalBook = async (req, res) => {
     { ...user, carts: [] }
   );
 
-  res.redirect("/transactions");
+  res.status(400).json({
+    msg: "get rental book",
+    data: null
+  })
 };
-
-module.exports.deleteBook = (req, res) => {};

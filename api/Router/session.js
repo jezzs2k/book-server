@@ -3,7 +3,6 @@ const router = require("express").Router();
 const {
   getCart,
   addToCart,
-  deleteBook,
   rentalBook
 } = require("../Controllers/session.controller.js");
 
@@ -14,8 +13,5 @@ router.get("/", getCart);
 router.post("/:id/add", addToCart);
 
 router.get("/rental/books", rentalBook)
-
-//create new book {id: , description: , title: }
-router.delete("/:id/delete", deleteBook);
 
 module.exports = router;
