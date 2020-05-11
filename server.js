@@ -25,6 +25,9 @@ app.use(sessionMiddleware);
 
 const authMiddleware = require("./middleware/auth.js");
 
+//Router API
+const authApiRoute = require('./api/R')
+
 //Router
 const booksRoute = require("./Routes/book.route.js");
 const usersRoute = require("./Routes/user.route.js");

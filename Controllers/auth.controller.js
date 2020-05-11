@@ -1,6 +1,5 @@
 const bcrypt = require("bcrypt");
 const sgMail = require("@sendgrid/mail");
-const shortid = require("shortid");
 
 const User = require("../Model/user.model.js");
 
