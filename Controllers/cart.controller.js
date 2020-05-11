@@ -1,12 +1,12 @@
 const shortid = require("shortid");
 const db = require("../db.js");
-const Session = require('../Model/session.model.js');
-const User = require('../Model/user.model.js');
+const Session = require("../Model/session.model.js");
+const User = require("../Model/user.model.js");
 
 module.exports.getCart = async (req, res) => {
   const userId = req.signedCookies.userId;
   const sessionId = req.signedCookies.sessionId;
-  const cartInSession = await Session.findOne({sessionId});
+  const cartInSession = await Session.findOne({ sessionId });
 
   const carts = [];
 
@@ -25,11 +25,15 @@ module.exports.getCart = async (req, res) => {
   }
 
   if (userId) {
-    const user = await User.findOneAndUpdate({_id: userId}, {
-      ...user, carts: [...carts]
-    });
-    
-    await Session.findOneAndDelete({sessionId});
+    const user = await User.findOneAndUpdate(
+      { _id: userId },
+      {
+        ...user,
+        carts: [...carts]
+      }
+    );
+
+    await Session.findOneAndDelete({ sessionId });
 
     res.render("cart/index.pug", {
       carts
@@ -45,43 +49,40 @@ module.exports.getCart = async (req, res) => {
 module.exports.addToCart = async (req, res) => {
   const sessionId = req.signedCookies.sessionId;
   const bookId = req.params.id;
+  
+  console.log(sessionId, bookId)
+  
+  return ;
 
-  const customer = await Session.findOne({sessionId});
+  const customer = await Session.findOne({ sessionId });
 
   if (customer && customer.carts && bookId in customer.carts) {
-    const sessions
-    db.get("sessions")
-      .find({ sessionId })
-      .assign({
+    await Session.findOneAndUpdate(
+      { sessionId },
+      {
         carts: { ...customer.carts, [bookId]: customer.carts[bookId] + 1 }
-      })
-      .write();
+      }
+    );
   } else {
-    if(customer && customer.cart){
-      db.get("sessions")
-      .find({ sessionId })
-      .assign({ carts: { ...customer.carts, [bookId]: 1 } })
-      .write();
-    }else{
-      db.get("sessions")
-      .find({ sessionId })
-      .assign({ carts: {[bookId]: 1 } })
-      .write();
+    if (customer && customer.cart) {
+      await Session.findOneAndUpdate(
+        { sessionId },
+        { carts: { ...customer.carts, [bookId]: 1 } }
+      );
+    } else {
+      await Session.findOneAndUpdate({ sessionId }, { carts: { [bookId]: 1 } });
     }
   }
-  
-  console.log(customer);
+  console.log(customer)
 };
 
-module.exports.rentalBook = (req, res) => {
+module.exports.rentalBook = async (req, res) => {
   if (!req.signedCookies.auth) {
     res.redirect("/auth/login");
     return;
   }
-  const user = db
-    .get("users")
-    .find({ id: req.signedCookies.auth })
-    .value();
+  const user = await User.findById({ _id: req.signedCookies.auth });
+
   if (user.carts) {
     user.carts.map(i => {
       db.get("transactions")
@@ -96,10 +97,10 @@ module.exports.rentalBook = (req, res) => {
     });
   }
 
-  db.get("users")
-    .find({ id: req.signedCookies.auth })
-    .assign({ ...user, carts: [] })
-    .value();
+  await User.findOneAndUpdate(
+    { _id: req.signedCookies.auth },
+    { ...user, carts: [] }
+  );
 
   res.redirect("/transactions");
 };

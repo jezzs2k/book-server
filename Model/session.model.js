@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const SessionSchema = new Schema({
   sessionId: {
-    type:  Schema.Types.ObjectId,
+    type:  String,
     require: true
   },
   carts: {
