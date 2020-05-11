@@ -14,36 +14,37 @@ block content
                     h5.card-title= book.name
                     p.card-text= book.des
                     a.btn.btn-primary(href=`/carts/${book.id}/add`) Add To Cart
+        nav(aria-label='Page navigation example' style='display: flex; justify-content: center')
+          ul.pagination
+            li.page-item
+              a.page-link(href=`${url}?page=${page-1}`, aria-label='Previous')
+                span(aria-hidden='true') &laquo;
+                span.sr-only Previous
+            if page > 1
+              li.page-item
+                a.page-link(href=`${url}?page=${page-1}`)= page-1
+              li.page-item
+                a.page-link(href=`${url}?page=${page}`)= page
+              li.page-item
+                a.page-link(href=`${url}?page=${page+1}`)= page+1
+            else
+              li.page-item
+                a.page-link(href=`${url}?page=${page}`)= page
+              li.page-item
+                a.page-link(href=`${url}?page=${page+1}`)= page+1
+              li.page-item
+                a.page-link(href=`${url}?page=${page+2}`)= page+2
+            li.page-item
+              a.page-link(href=`${url}?page=${page+1}`, aria-label='Next')
+                span(aria-hidden='true') &raquo;
+                span.sr-only Next
 
       else
         h2.text-center Don't have books in your store
         a(href='/') Back to Home
         
-  nav(aria-label='Page navigation example' style='display: flex; justify-content: center')
-    ul.pagination
-      li.page-item
-        a.page-link(href=`${url}?page=${page-1}`, aria-label='Previous')
-          span(aria-hidden='true') &laquo;
-          span.sr-only Previous
-      if page > 1
-        li.page-item
-          a.page-link(href=`${url}?page=${page-1}`)= page-1
-        li.page-item
-          a.page-link(href=`${url}?page=${page}`)= page
-        li.page-item
-          a.page-link(href=`${url}?page=${page+1}`)= page+1
-      else
-        li.page-item
-          a.page-link(href=`${url}?page=${page}`)= page
-        li.page-item
-          a.page-link(href=`${url}?page=${page+1}`)= page+1
-        li.page-item
-          a.page-link(href=`${url}?page=${page+2}`)= page+2
-      li.page-item
-        a.page-link(href=`${url}?page=${page+1}`, aria-label='Next')
-          span(aria-hidden='true') &raquo;
-          span.sr-only Next
+  
         
 
 
-  a(href='/books/create') create new book
+  a(href='/books/create').ml create new book

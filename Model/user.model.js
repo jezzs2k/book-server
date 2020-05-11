@@ -23,6 +23,10 @@ const UserSchema = new Schema({
     type: String,
     default: "https://picsum.photos/100"
   },
+  carts: {
+    type: Object,
+    default: {}
+  },
   isActive: {
     type: Boolean,
     default: false

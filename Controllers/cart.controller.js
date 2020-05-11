@@ -49,10 +49,6 @@ module.exports.getCart = async (req, res) => {
 module.exports.addToCart = async (req, res) => {
   const sessionId = req.signedCookies.sessionId;
   const bookId = req.params.id;
-  
-  console.log(sessionId, bookId)
-  
-  return ;
 
   const customer = await Session.findOne({ sessionId });
 

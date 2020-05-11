@@ -8,8 +8,8 @@ const SessionSchema = new Schema({
     require: true
   },
   carts: {
-    type: Array,
-    default: []
+    type: Object,
+    default: {}
   },
 })
 
