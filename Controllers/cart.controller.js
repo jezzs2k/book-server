@@ -1,13 +1,11 @@
 const shortid = require("shortid");
 const db = require("../db.js");
+const Session = require('../Model/session.model.js');
 
 module.exports.getCart = (req, res) => {
   const userId = req.signedCookies.userId;
   const sessionId = req.signedCookies.sessionId;
-  const cartInSession = db
-    .get("sessions")
-    .find({ sessionId })
-    .value();
+  const cartInSession = Session.findOne({sessionId});
 
   const carts = [];
 
