@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const sgMail = require("@sendgrid/mail");
-const shortid = require('shortid');
+const shortid = require("shortid");
 
 const User = require("../Model/user.model.js");
 
@@ -12,7 +12,8 @@ module.exports.login = (req, res) => {
 
 module.exports.postLogin = async (req, res) => {
   const errors = [];
-
+  
+  console.log(req.body)
   const user = await User.findOne({ email: req.body.email });
 
   if (!user) {
@@ -72,7 +73,6 @@ module.exports.signup = (req, res) => {
 module.exports.register = async (req, res) => {
   sgMail.setApiKey(process.env.SENDGRID_API_KEY);
   const data = {
-    id: shortid.generate(),
     name: req.body.name,
     phone: req.body.phone,
     email: req.body.email,
@@ -81,22 +81,9 @@ module.exports.register = async (req, res) => {
     isAdmin: false
   };
 
-  const link = `https://faint-elderly-icecream.glitch.me/auth/${data.id}/accept`;
-  const msg = {
-    to: data.email,
-    from: "vuthanhhieu00@gmail.com",
-    subject: "Sending with Twilio SendGrid is Fun",
-    text: "xac nhan email",
-
-    html: `<a href=${link}>xac nhan tai khoan</a>`
-  };
-
   data.password = await bcrypt.hash(data.password, 10);
 
-  const user = db
-    .get("users")
-    .find({ email: req.body.email })
-    .value();
+  const user = await User.findOne({ email: req.body.email });
 
   if (user) {
     res.render("auth/register.pug", {
@@ -105,9 +92,19 @@ module.exports.register = async (req, res) => {
     return;
   }
 
-  db.get("users")
-    .push(data)
-    .write();
+  const newUser = new User(data);
+  
+  const link = `https://playful-danthus.glitch.me/auth/${newUser._id}/accept`;
+  const msg = {
+    to: data.email,
+    from: "vuthanhhieu00@gmail.com",
+    subject: "Sending with Twilio SendGrid is Fun",
+    text: "xac nhan email",
+
+    html: `<a href=${link}>xac nhan tai khoan</a>`
+  };
+  
+  await newUser.save();
 
   sgMail.send(msg);
   res.render("auth/active.pug");
@@ -117,13 +114,10 @@ module.exports.accept = (req, res) => {
   res.render("auth/active.pug");
 };
 
-module.exports.postAccept = (req, res) => {
+module.exports.postAccept = async (req, res) => {
   const id = req.params.id;
 
-  db.get("users")
-    .find({ id })
-    .assign({ isActive: true })
-    .write();
+  await User.findOneAndUpdate({ _id: id }, { isActive: true });
 
   res.redirect("/auth/login");
 };
