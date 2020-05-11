@@ -1,10 +1,9 @@
-const shortid = require("shortid");
 const Transaction = require("../Model/transaction.model.js");
 const User = require("../Model/user.model.js");
 const Book = require("../Model/book.model.js");
 
 module.exports.getTransactions = async (req, res) => {
-  const transactions = await Transaction.find().limit(10);
+  const transactions = await Transaction.find().limit(10).populate('user book');
 
   const userId = req.cookies.auth;
 

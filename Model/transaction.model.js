@@ -4,10 +4,10 @@ const Schema = mongoose.Schema;
 
 const TransactionSchema = new Schema({
   userId: {
-    type: Schema.Type.ObjectId
+    type: Schema.Types.ObjectId
   },
   des: {
-    type: Schema.Type.ObjectId
+    type: Schema.Types.ObjectId
   },
   isComplete: {
     type: Boolean,

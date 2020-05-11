@@ -1,7 +1,7 @@
-const shortid = require("shortid");
-const db = require("../db.js");
 const Session = require("../Model/session.model.js");
 const User = require("../Model/user.model.js");
+const Book = require("../Model/user.model.js");
+const Transaction = require("../Model/transaction.model.js");
 
 module.exports.getCart = async (req, res) => {
   const userId = req.signedCookies.userId;
@@ -12,10 +12,7 @@ module.exports.getCart = async (req, res) => {
 
   if (cartInSession && cartInSession.carts) {
     for (const bookId in cartInSession.carts) {
-      const book = db
-        .get("books")
-        .find({ id: bookId })
-        .value();
+      const book = await Book.findById(bookId);
 
       carts.push({
         ...book,
@@ -69,7 +66,7 @@ module.exports.addToCart = async (req, res) => {
       await Session.findOneAndUpdate({ sessionId }, { carts: { [bookId]: 1 } });
     }
   }
-  console.log(customer)
+  console.log(customer);
 };
 
 module.exports.rentalBook = async (req, res) => {
@@ -80,15 +77,13 @@ module.exports.rentalBook = async (req, res) => {
   const user = await User.findById({ _id: req.signedCookies.auth });
 
   if (user.carts) {
-    user.carts.map(i => {
-      db.get("transactions")
-        .push({
-          id: shortid.generate(),
-          userId: user.id,
-          bookId: i.id,
-          isComplete: false
-        })
-        .write();
+    user.carts.map(async i => {
+      const newTransaction = new Transaction({
+        userId: user.id,
+        bookId: i.id,
+        isComplete: false
+      });
+      await newTransaction.save();
       return 1;
     });
   }
