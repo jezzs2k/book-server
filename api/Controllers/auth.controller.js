@@ -1,4 +1,8 @@
 const bcrypt = require("bcrypt");
+const sgMail = require("@sendgrid/mail");
+
+require("dotenv").config();
+
 const User = require("../../Model/user.model.js");
 
 module.exports.login = async (req, res) => {
@@ -55,4 +59,53 @@ module.exports.login = async (req, res) => {
     msg: "Login successfully",
     data: { userId: user._id }
   });
+};
+
+module.exports.register = async (req, res) => {
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+  const data = {
+    name: req.body.name,
+    phone: req.body.phone,
+    email: req.body.email,
+    password: req.body.password,
+    isActive: false,
+    wrongLoginCount: 0,
+    isAdmin: false
+  };
+
+  data.password = await bcrypt.hash(data.password, 10);
+
+  const user = await User.findOne({ email: req.body.email });
+
+  if (user) {
+    res.status(400).json({
+      msg: "User is existx"
+    })
+    return;
+  }
+
+  const newUser = new User(data);
+  
+  const link = `https://playful-danthus.glitch.me/auth/${newUser._id}/accept`;
+  const msg = {
+    to: data.email,
+    from: "vuthanhhieu00@gmail.com",
+    subject: "Sending with Twilio SendGrid is Fun",
+    text: "xac nhan email",
+
+    html: `<a href=${link}>xac nhan tai khoan</a>`
+  };
+  
+  await newUser.save();
+
+  sgMail.send(msg);
+  res.render("auth/active.pug");
+};
+
+module.exports.postAccept = async (req, res) => {
+  const id = req.params.id;
+
+  await User.findOneAndUpdate({ _id: id }, { isActive: true });
+
+  res.redirect("/auth/login");
 };
