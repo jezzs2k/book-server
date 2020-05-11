@@ -40,7 +40,7 @@ module.exports.deleteBook = async (req, res) => {
 
   await Book.findOneAndDelete({ _id: id });
 
-  res.redirect("/books");
+  res.redirect("/");
 };
 
 module.exports.getUpdateBook = async (req, res) => {
@@ -56,5 +56,5 @@ module.exports.postUpdateBook = async (req, res) => {
 
   await Book.findOneAndUpdate({ _id: id }, { ...req.body });
 
-  res.redirect("/books");
+  res.redirect("/");
 };

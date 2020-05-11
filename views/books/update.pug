@@ -3,7 +3,7 @@ extends ../layout
 block content
 
   h2.text-center Update book
-  form(action='/books/' + book.id + '/update' method='post')
+  form(action='/' + book.id + '/update' method='post')
     .form-group
       input.form-control(name='title' type='text' id='title' value=book.title)
       lable(for='title') Title

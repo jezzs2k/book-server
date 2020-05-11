@@ -1,15 +1,14 @@
 const shortid = require("shortid");
-const db = require("../db.js");
+const Transaction = require("../Model/transaction.model.js");
+const User = require("../Model/user.model.js");
+const Book = require("../Model/book.model.js");
 
-module.exports.getTransactions = (req, res) => {
-  const transactions = db.get("transactions").value();
+module.exports.getTransactions = async (req, res) => {
+  const transactions = await Transaction.find().limit(10);
 
   const userId = req.cookies.auth;
 
-  const user = db
-    .get("users")
-    .find({ id: userId })
-    .value();
+  const user = await User.findById(userId);
 
   if (user && user.isAdmin) {
     res.render("transaction/index.pug", {
@@ -25,9 +24,9 @@ module.exports.getTransactions = (req, res) => {
   }
 };
 
-module.exports.getCreateTransaction = (req, res) => {
-  const users = db.get("users").value();
-  const books = db.get("books").value();
+module.exports.getCreateTransaction = async (req, res) => {
+  const users = await User.find();
+  const books = await Book.find();
 
   res.render("transaction/create.pug", {
     users,
@@ -35,44 +34,36 @@ module.exports.getCreateTransaction = (req, res) => {
   });
 };
 
-module.exports.postCreateTransaction = (req, res) => {
+module.exports.postCreateTransaction = async (req, res) => {
   const name = req.body.user;
   const title = req.body.book;
 
-  const user = db
-    .get("users")
-    .find({ name })
-    .value();
-  const book = db
-    .get("books")
-    .find({ title })
-    .value();
+  const user = await User.findOne({ name });
+  const book = await Book.findOne({ title });
 
-  db.get("transactions")
-    .push({
-      id: shortid.generate(),
-      userId: user.id,
-      bookId: book.id,
-      isComplete: false
-    })
-    .write();
+  const newTransaction = new Transaction({
+    userId: user.id,
+    bookId: book.id,
+    isComplete: false
+  });
+
+  await newTransaction.save();
 
   res.redirect("/transactions");
 };
 
-module.exports.complete = (req, res) => {
+module.exports.complete = async (req, res) => {
   const id = req.params.id;
 
-  const transaction = db
-    .get("transactions")
-    .find({ id })
-    .value();
+  const transaction = await Transaction.findById(id);
 
   if (transaction !== undefined) {
-    db.get("transactions")
-      .find({ id })
-      .assign({ isComplete: true })
-      .write();
+    await Transaction.findOneAndUpdate(
+      {
+        _id: transaction._id
+      },
+      { isComplete: true }
+    );
   } else {
     res.render("transaction/index.pug", {
       error: "Id is not defined"
