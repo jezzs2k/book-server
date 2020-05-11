@@ -12,9 +12,11 @@ module.exports.getBook = (req, res) => {
   const start = (page - 1) * perPage;
   const end = (page - 1) * perPage + perPage;
 
-  const books = db.get('books').value();
-  console.log(books);
-  return;
+  const books = db
+    .get("books")
+    .value()
+    .slice(start, end);
+  
   res.render("books/index.pug", {
     books,
     page,
