@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const shortid = require("shortid");
 const cookieParser = require("cookie-parser");
+const cors = require('cors');
 
 const connectDB = require('./config/db.js');
 
@@ -11,6 +12,7 @@ app.use(express.static('./public'))
 
 const db = require("./db.js");
 
+app.use(cors())
 app.use(cookieParser("hieuvu thnah"));
 
 app.use(express.json());
