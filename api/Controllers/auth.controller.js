@@ -1,33 +1,33 @@
-const bcrypt = require("bcrypt");
-const sgMail = require("@sendgrid/mail");
+const bcrypt = require('bcrypt');
+const sgMail = require('@sendgrid/mail');
 
-require("dotenv").config();
+require('dotenv').config();
 
-const User = require("../../Model/user.model.js");
+const User = require('../../Model/user.model.js');
 
 module.exports.login = async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
 
   if (user === null) {
     res.status(400).json({
-      msg: "User is not defind",
-      data: null
+      msg: 'User is not defind',
+      data: null,
     });
     return;
   }
 
   if (!user.isActive) {
     res.status(400).json({
-      msg: "User is not active, check you email again",
-      data: null
+      msg: 'User is not active, check you email again',
+      data: null,
     });
     return;
   }
 
   if (user.wrongLoginCount >= 4) {
     res.status(400).json({
-      msg: "Ban da nhap sai qua 4 lan cho phep, tai khoan cuar ban bi tam khoa",
-      data: null
+      msg: 'Ban da nhap sai qua 4 lan cho phep, tai khoan cuar ban bi tam khoa',
+      data: null,
     });
     return;
   }
@@ -48,16 +48,16 @@ module.exports.login = async (req, res) => {
     }
 
     res.status(400).json({
-      msg: "password incorrect",
-      data: null
+      msg: 'password incorrect',
+      data: null,
     });
 
     return;
   }
 
   res.status(200).json({
-    msg: "Login successfully",
-    data: { userId: user._id }
+    msg: 'Login successfully',
+    data: { userId: user._id },
   });
 };
 
@@ -70,7 +70,7 @@ module.exports.register = async (req, res) => {
     password: req.body.password,
     isActive: false,
     wrongLoginCount: 0,
-    isAdmin: false
+    isAdmin: false,
   };
 
   data.password = await bcrypt.hash(data.password, 10);
@@ -79,8 +79,8 @@ module.exports.register = async (req, res) => {
 
   if (user) {
     res.status(400).json({
-      msg: "User is exists",
-      data: null
+      msg: 'User is exists',
+      data: null,
     });
     return;
   }
@@ -90,19 +90,19 @@ module.exports.register = async (req, res) => {
   const link = `https://playful-danthus.glitch.me/auth/${newUser._id}/accept`;
   const msg = {
     to: data.email,
-    from: "vuthanhhieu00@gmail.com",
-    subject: "Sending with Twilio SendGrid is Fun",
-    text: "xac nhan email",
+    from: 'vuthanhhieu00@gmail.com',
+    subject: 'Sending with Twilio SendGrid is Fun',
+    text: 'xac nhan email',
 
-    html: `<a href=${link}>xac nhan tai khoan</a>`
+    html: `<a href=${link}>xac nhan tai khoan</a>`,
   };
 
   await newUser.save();
 
   sgMail.send(msg);
   res.status(200).json({
-    msg: "Please check your mail",
-    data: null
+    msg: 'Please check your mail',
+    data: null,
   });
 };
 
@@ -112,7 +112,7 @@ module.exports.accept = async (req, res) => {
   await User.findOneAndUpdate({ _id: id }, { isActive: true });
 
   res.status(200).json({
-    msg: "Create user successfully",
-    data: { userId: id }
+    msg: 'Create user successfully',
+    data: { userId: id },
   });
 };
