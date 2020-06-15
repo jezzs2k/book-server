@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 const { VERIFY_TOKEN } = require('../configs/default.json');
-const User = require('../Schemas/user.model');
+const User = require('../Schemas/user.schema');
 
 module.exports.login = async (data) => {
   try {

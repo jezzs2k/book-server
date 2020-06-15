@@ -21,13 +21,13 @@ require('dotenv').config();
 //Router API
 const authApiRoute = require('./api/Router/auth.js');
 // const transactionApiRoute = require('./api/Router/transaction.js');
-// const bookApiRoute = require('./api/Router/book.js');
+const bookApiRoute = require('./api/Router/book.js');
 // const userApiRoute = require('./api/Router/user.js');
 // const sessionApiRoute = require('./api/Router/session.js');
 
 app.use('/api/auth', authApiRoute);
 // app.use('/api/transactions', transactionApiRoute);
-// app.use('/api/books', bookApiRoute);
+app.use('/api/books', bookApiRoute);
 // app.use('/api/users', userApiRoute);
 // app.use('/api/carts', sessionApiRoute);
 

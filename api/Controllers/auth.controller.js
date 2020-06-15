@@ -15,7 +15,7 @@ module.exports.login = async (req, res) => {
     const { error, value } = joiUserLogin.validate(req.body);
 
     if (error) {
-      res.jsonp(err(CommonError.INVALID_INPUT_PARAMS));
+      return res.jsonp(err(CommonError.INVALID_INPUT_PARAMS));
     }
 
     const token = await login(req.body);
@@ -31,7 +31,7 @@ module.exports.register = async (req, res) => {
     const { error, value } = joiUserRegister.validate(req.body);
 
     if (error) {
-      res.jsonp(err(CommonError.INVALID_INPUT_PARAMS));
+      return res.jsonp(err(CommonError.INVALID_INPUT_PARAMS));
     }
 
     const user = await register(req.body);

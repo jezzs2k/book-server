@@ -1,43 +1,82 @@
-// const Book = require("../../Model/book.model.js");
+const {
+  getBooks,
+  createBook,
+  deleteBook,
+  updateBook,
+} = require('../Models/book.model');
+const { success, err } = require('../utils/response');
+const { CommonError } = require('../common/error');
+const {
+  joiBookStore,
+  joiBookStoreUpdate,
+} = require('../Validators/book.validator');
 
-// module.exports.getBook = async (req, res) => {
-//   let page = parseInt(req.query.page) || 1;
+module.exports.getBooks = async (req, res) => {
+  try {
+    let page = parseInt(req.query.page) || 1;
 
-//   if (page === 0) {
-//     page = 1;
-//   }
-//   const perPage = 8;
+    if (page === 0) {
+      page = 1;
+    }
+    const perPage = 8;
+    const start = (page - 1) * perPage;
+    const end = (page - 1) * perPage + perPage;
 
-//   const start = (page - 1) * perPage;
-//   const end = (page - 1) * perPage + perPage;
+    const books = await getBooks(end, start);
+    res.jsonp(
+      success({
+        data: {
+          books,
+        },
+      })
+    );
+  } catch (error) {
+    console.log(error.message);
+    res.jsonp(err(CommonError.UNKNOWN_ERROR));
+  }
+};
 
-//   const books = await Book.find().limit(end - start);
+module.exports.createBook = async (req, res) => {
+  try {
+    const { error, value } = joiBookStore.validate(req.body);
 
-//   res.status(200).json({ msg: "get books", data: { books } });
-// };
+    if (error) {
+      console.log(error.message);
+      return res.jsonp(err(CommonError.INVALID_INPUT_PARAMS));
+    }
 
-// module.exports.createBook = async (req, res) => {
-//   const book = new Book({
-//     title: req.body.title,
-//     des: req.body.des
-//   });
+    const book = await createBook(req.body, req.user.userId);
 
-//   await book.save();
-//   res.status(201).json({ msg: "create book", data: { book } });
-// };
+    res.jsonp(success({ data: { book } }));
+  } catch (error) {
+    console.log(error.message);
+    res.jsonp(err(CommonError.UNKNOWN_ERROR));
+  }
+};
 
-// module.exports.deleteBook = async (req, res) => {
-//   const id = req.params.id;
+module.exports.deleteBook = async (req, res) => {
+  try {
+    const book = await deleteBook(req.params.id);
 
-//   await Book.findOneAndDelete({ _id: id });
+    res.jsonp(success({ data: { book } }));
+  } catch (error) {
+    console.log(error.message);
+    res.jsonp(err(CommonError.UNKNOWN_ERROR));
+  }
+};
 
-//   res.status(200).json({ msg: "delete book", data: null });
-// };
+module.exports.updateBook = async (req, res) => {
+  try {
+    const { error, value } = joiBookStoreUpdate.validate(req.body);
+    if (error) {
+      console.log(error.message);
+      return res.jsonp(err(CommonError.INVALID_INPUT_PARAMS));
+    }
 
-// module.exports.updateBook = async (req, res) => {
-//   const id = req.params.id;
-
-//   await Book.findOneAndUpdate({ _id: id }, { ...req.body });
-
-//   res.status(200).json({ msg: "update book", data: null });
-// };
+    const book = await updateBook(req.params.id, req.body);
+    res.jsonp(success({ data: { book } }));
+  } catch (error) {
+    console.log(error.message);
+    res.jsonp(err(CommonError.UNKNOWN_ERROR));
+  }
+};
