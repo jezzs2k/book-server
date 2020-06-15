@@ -1,22 +1,22 @@
-const router = require("express").Router();
+const router = require('express').Router();
 
 const {
   getBook,
   createBook,
   deleteBook,
-  updateBook
-} = require("../Controllers/book.controller.js");
+  updateBook,
+} = require('../Controllers/book.controller.js');
 
 //get books
-router.get("/", getBook);
+router.get('/', getBook);
 
 //create new book {id: , description: , title: }
-router.post("/", createBook);
+router.post('/', createBook);
 
 //deletebookby id
-router.delete("/:id/delete", deleteBook);
+router.delete('/:id/delete', deleteBook);
 
 //post update books
-router.put("/:id/update", updateBook);
+router.put('/:id/update', updateBook);
 
 module.exports = router;

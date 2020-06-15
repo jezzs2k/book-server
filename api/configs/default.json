@@ -1,4 +1,5 @@
 {
   "VERIFY_PASS": "HIEU VU @ GMAIL . COM",
-  "MONGOURL": "mongodb+srv://admin:admin@cluster0-yorv4.mongodb.net/test?retryWrites=true&w=majority"
+  "MONGOURL": "mongodb+srv://admin:admin@cluster0-yorv4.mongodb.net/test?retryWrites=true&w=majority",
+  "VERIFY_TOKEN": "HDZ....vv....."
 }

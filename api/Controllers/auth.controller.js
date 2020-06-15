@@ -1,118 +1,93 @@
-const bcrypt = require('bcrypt');
-const sgMail = require('@sendgrid/mail');
+const nodemailer = require('nodemailer');
+const smtpTransport = require('nodemailer-smtp-transport');
+const hbs = require('nodemailer-express-handlebars');
 
-require('dotenv').config();
-
-const User = require('../../Model/user.model.js');
+const { CommonError } = require('../common/error');
+const { login, register, accept } = require('../Models/auth.model');
+const {
+  joiUserLogin,
+  joiUserRegister,
+} = require('../Validators/user.validator');
+const { success, err } = require('../utils/response');
 
 module.exports.login = async (req, res) => {
-  const user = await User.findOne({ email: req.body.email });
+  try {
+    const { error, value } = joiUserLogin.validate(req.body);
 
-  if (user === null) {
-    res.status(400).json({
-      msg: 'User is not defind',
-      data: null,
-    });
-    return;
-  }
-
-  if (!user.isActive) {
-    res.status(400).json({
-      msg: 'User is not active, check you email again',
-      data: null,
-    });
-    return;
-  }
-
-  if (user.wrongLoginCount >= 4) {
-    res.status(400).json({
-      msg: 'Ban da nhap sai qua 4 lan cho phep, tai khoan cuar ban bi tam khoa',
-      data: null,
-    });
-    return;
-  }
-
-  const match = await bcrypt.compare(req.body.password, user.password);
-
-  if (!match) {
-    if (user.wrongLoginCount) {
-      const user = await User.findOneAndUpdate(
-        { _id: user._id },
-        { wrongLoginCount: user.wrongLoginCount + 1 }
-      );
-    } else {
-      const user = await User.findOneAndUpdate(
-        { _id: user._id },
-        { wrongLoginCount: 1 }
-      );
+    if (error) {
+      res.jsonp(err(CommonError.INVALID_INPUT_PARAMS));
     }
 
-    res.status(400).json({
-      msg: 'password incorrect',
-      data: null,
-    });
-
-    return;
+    const token = await login(req.body);
+    console.log(token);
+    res.jsonp(success({ data: { token } }));
+  } catch (error) {
+    res.jsonp(err(CommonError.UNKNOWN_ERROR));
   }
-
-  res.status(200).json({
-    msg: 'Login successfully',
-    data: { userId: user._id },
-  });
 };
 
 module.exports.register = async (req, res) => {
-  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-  const data = {
-    name: req.body.name,
-    phone: req.body.phone,
-    email: req.body.email,
-    password: req.body.password,
-    isActive: false,
-    wrongLoginCount: 0,
-    isAdmin: false,
-  };
+  try {
+    const { error, value } = joiUserRegister.validate(req.body);
 
-  data.password = await bcrypt.hash(data.password, 10);
+    if (error) {
+      res.jsonp(err(CommonError.INVALID_INPUT_PARAMS));
+    }
 
-  const user = await User.findOne({ email: req.body.email });
+    const user = await register(req.body);
 
-  if (user) {
-    res.status(400).json({
-      msg: 'User is exists',
-      data: null,
-    });
-    return;
+    const transporter = await nodemailer.createTransport(
+      smtpTransport({
+        service: 'gmail',
+        host: 'smtp.gmail.com',
+        auth: {
+          user: process.env.EMAIL,
+          pass: process.env.PASSWORD,
+        },
+      })
+    );
+
+    const handlebarOptions = {
+      viewEngine: {
+        partialsDir: '../app/api/views/',
+        layoutsDir: '../app/api/views/',
+      },
+      viewPath: '../app/api/views/',
+      extName: '.hbs',
+    };
+
+    transporter.use('compile', hbs(handlebarOptions));
+
+    const message = {
+      from: 'vuthanhhieu00@gmail.com',
+      to: user.email,
+      subject: 'CREATE NEW ACCOUNT',
+      template: 'email',
+      context: {
+        userId: user.id,
+        username: user.username,
+        email: user.email,
+      },
+    };
+
+    const info = await transporter.sendMail(message);
+
+    console.log('Send Main:', info.messageId);
+
+    res.jsonp(success({ data: { info } }));
+  } catch (error) {
+    console.log(error.message);
+    res.jsonp(err(CommonError.UNKNOWN_ERROR));
   }
-
-  const newUser = new User(data);
-
-  const link = `https://playful-danthus.glitch.me/auth/${newUser._id}/accept`;
-  const msg = {
-    to: data.email,
-    from: 'vuthanhhieu00@gmail.com',
-    subject: 'Sending with Twilio SendGrid is Fun',
-    text: 'xac nhan email',
-
-    html: `<a href=${link}>xac nhan tai khoan</a>`,
-  };
-
-  await newUser.save();
-
-  sgMail.send(msg);
-  res.status(200).json({
-    msg: 'Please check your mail',
-    data: null,
-  });
 };
 
 module.exports.accept = async (req, res) => {
-  const id = req.params.id;
-
-  await User.findOneAndUpdate({ _id: id }, { isActive: true });
-
-  res.status(200).json({
-    msg: 'Create user successfully',
-    data: { userId: id },
-  });
+  try {
+    const id = req.params.id;
+    await accept(id);
+    res.redirect('https://google.com');
+  } catch (error) {
+    console.log(error.message);
+    res.jsonp(err(CommonError.UNKNOWN_ERROR));
+  }
 };
