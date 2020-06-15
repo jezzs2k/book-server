@@ -9,7 +9,7 @@ const UserSchema = new Schema({
   },
   phone: {
     type: String,
-    require: false,
+    default: null,
   },
   email: {
     type: String,
@@ -22,10 +22,6 @@ const UserSchema = new Schema({
   avatar: {
     type: String,
     default: 'https://picsum.photos/100',
-  },
-  carts: {
-    type: Array,
-    default: [],
   },
   isActive: {
     type: Boolean,

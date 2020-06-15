@@ -1,58 +1,54 @@
-// const cloudinary = require("cloudinary");
-// const User = require("../../Model/user.model.js");
+const { CommonError } = require('../common/error');
+const { profile, deleteUser, updateUser } = require('../Models/user.model');
+const { joiUpdateUser } = require('../Validators/user.validator');
+const { success, err } = require('../utils/response');
 
-// //config
-// cloudinary.config({
-//   cloud_name: "dt9wztdih",
-//   api_key: "256121794527994",
-//   api_secret: "hxDjOIKc77lkOqeHWB8wlSmnAHk"
-// });
+module.exports.profile = async (req, res) => {
+  try {
+    const user = await profile(req.user.userId);
 
-// module.exports.getUser = async (req, res) => {
-//   const users = await User.find().limit(10);
-//   res.status(200).json({
-//     msg: "get users",
-//     data: {users}
-//   })
-// };
+    res.jsonp(success({ data: { user } }));
+  } catch (error) {
+    console.log(error.message);
+    res.jsonp(err(CommonError.UNKNOWN_ERROR));
+  }
+};
 
-// module.exports.profile = async (req, res) => {
-//   const users = await User.find().limit(10);
-//   res.status(200).json({
-//     msg: "get profile",
-//     data: {users}
-//   })
-// };
+module.exports.getProfileById = async (req, res) => {
+  try {
+    const user = await profile(req.params.userId);
 
-// module.exports.deleteUser = async (req, res) => {
-//   const id = req.params.id;
-//   const user = await User.findOneAndDelete({ _id: id });
+    res.jsonp(success({ data: { user } }));
+  } catch (error) {
+    console.log(error.message);
+    res.jsonp(err(CommonError.UNKNOWN_ERROR));
+  }
+};
 
-//   res.status(200).json({
-//     msg: "delete successfully",
-//     data: {user}
-//   })
-// };
+module.exports.deleteUser = async (req, res) => {
+  try {
+    const user = await deleteUser(req.params.id);
+    res.jsonp(success({ data: { user } }));
+  } catch (error) {
+    console.log(error.message);
+    res.jsonp(err(CommonError.UNKNOWN_ERROR));
+  }
+};
 
-// module.exports.updateUser = async (req, res) => {
-//   const id = req.params.id;
+module.exports.updateUser = async (req, res) => {
+  try {
+    const { error, value } = joiUpdateUser.validate(req.body);
 
-//   const urlImg = req.file.path
-//     .split("/")
-//     .splice(1)
-//     .join("/");
+    if (error) {
+      console.log(error.message);
+      return res.jsonp(err(CommonError.INVALID_INPUT_PARAMS));
+    }
 
-//   const result = await cloudinary.uploader.upload(
-//     `https://playful-danthus.glitch.me/${urlImg}`
-//   );
+    const user = await updateUser(req.body, req.user.userId);
 
-//   const user = await User.findOneAndUpdate(
-//     { _id: id },
-//     { ...req.body, avatar: result.secure_url }
-//   );
-
-//   res.status(200).json({
-//     msg: "update users",
-//     data: {user}
-//   })
-// };
+    res.jsonp(success({ data: { user } }));
+  } catch (error) {
+    console.log(error.message);
+    res.jsonp(err(CommonError.UNKNOWN_ERROR));
+  }
+};

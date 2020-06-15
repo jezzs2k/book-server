@@ -4,8 +4,18 @@ const { CommonError } = require('../common/error');
 
 module.exports.getStore = async (req, res) => {
   try {
-    const storeId = req.params.storeId || '';
-    const store = await getStore(req.user.userId, storeId);
+    const store = await getStore(req.user.userId);
+
+    res.jsonp(success({ data: { store } }));
+  } catch (error) {
+    console.log(error.message);
+    res.jsonp(err(CommonError.UNKNOWN_ERROR));
+  }
+};
+
+module.exports.getStoreById = async (req, res) => {
+  try {
+    const store = await getStore(req.params.storeId);
 
     res.jsonp(success({ data: { store } }));
   } catch (error) {

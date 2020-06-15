@@ -1,23 +1,16 @@
-const router = require("express").Router();
-const multer = require("multer");
-const upload = multer({ dest: "./public/uploads" });
+const router = require('express').Router();
+const authMiddleware = require('../Middleware/auth.middleware');
 
 const {
-  getUser,
+  profile,
   deleteUser,
   updateUser,
-  profile
-} = require("../Controllers/user.controller.js");
+  getProfileById,
+} = require('../Controllers/user.controller.js');
 
-//get user
-router.get("/", getUser);
-
-router.get("/profile", profile);
-
-//deleteuser by id
-router.delete("/:id/delete", deleteUser);
-
-//post update user
-router.post("/profile/:id/update", upload.single("avatar"), updateUser);
+router.get('/profile', authMiddleware, profile);
+router.get('/profile/:userId', authMiddleware, getProfileById);
+router.delete('/', authMiddleware, deleteUser);
+router.put('/', authMiddleware, updateUser);
 
 module.exports = router;

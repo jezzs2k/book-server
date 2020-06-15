@@ -1,11 +1,11 @@
 const Store = require('../Schemas/stores.schema');
 
-module.exports.getStore = async (userId, storeId) => {
+module.exports.getStore = async (id) => {
   try {
-    let store = await Store.findOne({ user: userId }).populate('user');
+    let store = await Store.findOne({ user: id }).populate('user');
 
     if (!store) {
-      store = await Store.findById(storeId);
+      store = await Store.findById(id);
     }
 
     return store;

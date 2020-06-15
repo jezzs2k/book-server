@@ -22,6 +22,7 @@ module.exports.login = async (req, res) => {
 
     res.jsonp(success({ data: { token } }));
   } catch (error) {
+    console.log(error.message);
     res.jsonp(err(CommonError.UNKNOWN_ERROR));
   }
 };

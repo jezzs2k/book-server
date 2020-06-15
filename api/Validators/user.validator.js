@@ -10,10 +10,16 @@ module.exports.joiUserLogin = Joi.object({
 });
 
 module.exports.joiUserRegister = Joi.object({
-  username: Joi.string().alphanum().min(3).max(30).required(),
+  username: Joi.string().min(3).max(30).required(),
   email: Joi.string().email({
     minDomainSegments: 2,
     tlds: { allow: ['com', 'net'] },
   }),
   password: Joi.string(),
+});
+
+module.exports.joiUpdateUser = Joi.object({
+  username: Joi.string().min(3).max(30),
+  avatar: Joi.string(),
+  phone: Joi.string(),
 });

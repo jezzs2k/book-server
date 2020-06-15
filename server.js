@@ -23,13 +23,15 @@ const authRoute = require('./api/Router/auth.route');
 const transactionRoute = require('./api/Router/transaction.route');
 const bookRoute = require('./api/Router/book.route');
 const storeRoute = require('./api/Router/store.route');
-// const userApiRoute = require('./api/Router/user');
+const userRoute = require('./api/Router/user.route');
+const cartRoute = require('./api/Router/cart.route');
 
 app.use('/api/auth', authRoute);
 app.use('/api/transactions', transactionRoute);
 app.use('/api/books', bookRoute);
 app.use('/api/store', storeRoute);
-// app.use('/api/users', userApiRoute);
+app.use('/api/users', userRoute);
+app.use('/api/carts', cartRoute);
 
 const PORT = process.env.PORT || 5000;
 
