@@ -19,7 +19,7 @@ module.exports.login = async (req, res) => {
     }
 
     const token = await login(req.body);
-    console.log(token);
+
     res.jsonp(success({ data: { token } }));
   } catch (error) {
     res.jsonp(err(CommonError.UNKNOWN_ERROR));

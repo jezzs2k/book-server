@@ -7,7 +7,6 @@ const {
   complete,
 } = require('../Controllers/transaction.controller.js');
 
-//get transaction
 router.get('/', authMiddleware, getTransactions);
 router.post('/:bookId', authMiddleware, createTransaction);
 router.put('/:id', complete);
