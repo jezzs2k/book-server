@@ -30,7 +30,7 @@
     "nodemailer-express-handlebars": "^4.0.0",
     "nodemailer-smtp-transport": "^2.7.4",
     "nodemon": "^2.0.4",
-    "pug": "^2.0.4",
+    "pug": "^3.0.1",
     "shortid": "^2.2.15"
   },
   "engines": {
